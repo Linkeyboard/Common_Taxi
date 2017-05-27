@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<div>
+    <img src=" {{url_for('static',filename='images/icon_intro.png')}}" style="border: #000 solid 20%;  
+                display: block;  
+                margin: 15% auto;
+                width:38%; 
+                height:38%;  
+                border-radius: 100%;  "></img>
+</div>
+
+<div class="weui-cells">
+<a class="weui-cell weui-cell_access" href="javascript:;" style="text-decoration:none">
+    <div class="weui-cell__hd">
+        <i class="glyphicon glyphicon-list-alt"></i>
+        <br>
+    </div>
+    <div class="weui-cell__bd">
+        <p>我的账单</p>
+    </div>
+    <div class="weui-cell__ft"></div>
+</a>
+<a class="weui-cell weui-cell_access" href="javascript:;" style="text-decoration:none">
+    <div class="weui-cell__hd">
+        <i class="glyphicon glyphicon-star"></i>
+        <br>
+    </div>
+    <div class="weui-cell__bd">
+        <p>我想去那</p>
+    </div>
+    <div class="weui-cell__ft"></div>
+</a>
+<a class="weui-cell weui-cell_access" href="javascript:;" style="text-decoration:none">
+    <div class="weui-cell__hd">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <br>
+    </div>
+    <div class="weui-cell__bd">
+        <p>我的好友</p>
+    </div>
+    <div class="weui-cell__ft"></div>
+</a>
+<a class="weui-cell weui-cell_access" href="javascript:;" style="text-decoration:none">
+    <div class="weui-cell__hd">
+        <i class="glyphicon glyphicon-flag"></i>
+        <br>
+    </div>
+    <div class="weui-cell__bd">
+        <p>我的目的地</p>
+    </div>
+    <div class="weui-cell__ft"></div>
+</a>
+</div>
+
+
+{% endblock %}
