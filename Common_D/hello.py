@@ -26,6 +26,11 @@ def My():
     return render_template('my.html', Session = session)
 
 
+@app.route('/maptest')
+def Maptest():
+    return render_template('maptest.html', Session = session)
+
+
 if __name__ == '__main__':
     app.run(debug = True, host ='0.0.0.0') 
 
