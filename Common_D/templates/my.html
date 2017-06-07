@@ -3,17 +3,16 @@
 
 
 <div>
-    <script>
-        alert({{headimgurl}})    
-    </script>
-    <img src={{ headimgurl }} style="border: #000 solid 20%;  
+    <img src={{ (information['headimgurl']|safe) }}   style="border: #000 solid 20%;  
                 display: block;  
-                margin: 15% auto;
+                margin: 10% auto;
                 width:38%; 
                 height:38%;  
                 border-radius: 100%;  "></img>
 </div>
-
+<div style="text-align:center;margin:0 auto;font-size: 130%">
+    <p>{{ (information['nickname']|safe) }}</p>
+</div>
 <div class="weui-cells">
 <a class="weui-cell weui-cell_access" href="javascript:;" style="text-decoration:none">
     <div class="weui-cell__hd">

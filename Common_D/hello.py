@@ -2,6 +2,7 @@ from flask import Flask,render_template,url_for,session
 from database import db_session,init_db
 from models import User
 from get_userinformation import information
+import json
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
@@ -23,14 +24,18 @@ def hello_world():
 @app.route('/my')
 def My():
     session['area'] = 3
-    return render_template('my.html', Session = session, headimgurl = information.json()['headimgurl'])
+    return render_template('my.html', Session = session, information = information.json())
 
 
 @app.route('/maptest')
 def Maptest():
     return render_template('maptest.html', Session = session)
 
+@app.route('/mapserch')
+def Mapserch():
+    return render_template('mapserch.html', Session = session)
+
 
 if __name__ == '__main__':
-    app.run(debug = True, host ='0.0.0.0', port = 80) 
+    app.run(debug = True, host ='0.0.0.0') 
 
