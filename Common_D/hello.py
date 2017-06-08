@@ -1,15 +1,27 @@
-from flask import Flask,render_template,url_for,session
+from flask import Flask,render_template,url_for,session,request,session
 from database import db_session,init_db
 from models import User
-from get_userinformation import information
 import json
+import requests
+from get_accesstoken import access_token
+import random
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
 def index():
+    session['test'] = 'exist'
     session['area'] = 1
+    CODE = request.values.get('code')
+    if CODE and CODE not in session:
+        session[CODE] = True
+        OPENID = requests.get("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxdbf87277a6a9e2c3&secret=b98898bcfe966fc2c50acaf8d6a87fc3&code="+CODE+"&grant_type=authorization_code").json()
+        #print(OPENID)
+        openid = OPENID.get('openid')
+        if openid:
+            print('openid:',openid)
+            session['openid'] = openid
     return render_template('index.html',Session = session)
 
 @app.route('/test')
@@ -24,8 +36,13 @@ def hello_world():
 @app.route('/my')
 def My():
     session['area'] = 3
-    return render_template('my.html', Session = session, information = information.json())
+    #print(session.get('test',None))
+    print('get-openid:',session.get('openid',None))
+    if 'openid' in session:
+        information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
 
+        return render_template('my.html', Session = session, information = information.json())
+    return 'No openid'
 
 @app.route('/maptest')
 def Maptest():
@@ -37,5 +54,5 @@ def Mapserch():
 
 
 if __name__ == '__main__':
-    app.run(debug = True, host ='0.0.0.0') 
+    app.run(debug = True, host ='0.0.0.0', port=5000) 
 

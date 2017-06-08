@@ -4,6 +4,7 @@ import hashlib
 import reply
 import receive
 import web
+import random
 
 class Handle(object):
     def POST(self):
@@ -14,7 +15,9 @@ class Handle(object):
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                content = "斐然真漂亮漂亮亮"
+                STATE = random.randint(1,100)
+                content = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdbf87277a6a9e2c3&redirect_uri=http%3a%2f%2flinkeyboard.site%3a5000&response_type=code&scope=snsapi_base&state="+str(STATE)+"#wechat_redirect"
+                print("content:",content)
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
