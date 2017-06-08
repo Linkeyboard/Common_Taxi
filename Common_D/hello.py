@@ -6,10 +6,12 @@ import requests
 from get_accesstoken import access_token
 import random
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='/lk/static')
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+webapp = Blueprint('webapp', __name__,url_prefix='/lk')
 
-@app.route('/')
+
+@webapp.route('/')
 def index():
     session['test'] = 'exist'
     session['area'] = 1
@@ -24,16 +26,16 @@ def index():
             session['openid'] = openid
     return render_template('index.html',Session = session)
 
-@app.route('/test')
+@webapp.route('/test')
 def test():
     session['area'] = 2
     return render_template('test.html', Session = session)
 
-@app.route('/hello')
+@webapp.route('/hello')
 def hello_world():
     return 'hello world!'
 
-@app.route('/my')
+@webapp.route('/my')
 def My():
     session['area'] = 3
     #print(session.get('test',None))
@@ -44,15 +46,16 @@ def My():
         return render_template('my.html', Session = session, information = information.json())
     return 'No openid'
 
-@app.route('/maptest')
+@webapp.route('/maptest')
 def Maptest():
     return render_template('maptest.html', Session = session)
 
-@app.route('/mapserch')
+@webapp.route('/mapserch')
 def Mapserch():
     return render_template('mapserch.html', Session = session)
 
 
-if __name__ == '__main__':
-    app.run(debug = True, host ='0.0.0.0', port=8008) 
+
+app.register_blueprint(webapp)
+app.run(debug = True, host ='0.0.0.0', port=8008) 
 
