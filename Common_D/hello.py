@@ -1,4 +1,4 @@
-from flask import Flask,render_template,url_for,session,request,session
+from flask import Flask,render_template,url_for,session,request,session,Blueprint
 from database import db_session,init_db
 from models import User
 import json
