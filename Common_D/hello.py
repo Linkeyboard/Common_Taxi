@@ -5,6 +5,7 @@ import json
 import requests
 from get_accesstoken import access_token
 import random
+from bs4 import BeautifulSoup
 
 app = Flask(__name__,static_url_path='/lk/static')
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
@@ -25,6 +26,18 @@ def index():
             print('openid:',openid)
             session['openid'] = openid
     return render_template('index.html',Session = session)
+
+@webapp.route('/login', methods=['POST'])
+def login():
+    data = {}
+    data['stuid'] = request.form['stuid']
+    data['pwd'] = request.form['pwd']
+    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"}
+    res = requests.post('http://222.194.15.1:7777/pls/wwwbks/bks_login2.login',data, headers = headers)
+    soup = BeautifulSoup(res.text,"html.parser")
+    if soup.title:
+        return "Successful"
+    return "Fail"
 
 @webapp.route('/test')
 def test():
