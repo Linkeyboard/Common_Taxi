@@ -6,7 +6,7 @@ app=Flask(__name__,static_url_path='/lk/static')
 
 webapp = Blueprint('webapp', __name__,url_prefix='/lk')
 
-@webapp.route('/a')
+@webapp.route('/')
 def Index():
     return "hello world"
 
