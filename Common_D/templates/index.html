@@ -7,24 +7,19 @@
   <title>COMMON_TAXI</title>
   <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
   <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+  
   <link rel="stylesheet" href="{{ url_for('static',filename='weui.css') }}">
   <link rel="stylesheet" href="{{ url_for('static',filename='weui.min.css') }}">
   <script src="//libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
   <script src="//api.map.baidu.com/api?v=2.0&ak=TXchWUVPs67PhSxZVcYCiuOZXzz0RB53	" type="text/javascript"></script>
-  <script>
-    $(document).ready(function () {
-      $("button").click(function () {
-        $("p").hide();
-      });
-    });
-  </script>
 <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
 
-<body>
+<body ontouchstart>
+
   <style>
     .form-bg{
         background: #00b4ef;
@@ -55,7 +50,6 @@
         box-shadow: none;
         padding: 0 20px 0 45px;
         height: 40px;
-        transition: all 0.3s ease 0s;
     }
     .form-horizontal .form-control:focus{
         background: #e0e0e0;
@@ -68,7 +62,6 @@
         left: 60px;
         font-size: 17px;
         color: #c8c8c8;
-        transition : all 0.5s ease 0s;
     }
     .form-horizontal .form-control:focus + i{
         color: #00b4ef;
@@ -80,7 +73,6 @@
         right: 60px;
         font-size: 20px;
         color: #808080;
-        transition: all 0.5s ease 0s;
     }
     .form-horizontal .fa-question-circle:hover{
         color: #000;
@@ -153,6 +145,14 @@
         }
     }
     </style>
+    <div id="myAlert1" class="alert alert-warning" style="display: none;" >
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong></strong>学号或者密码错误！
+    </div>
+    <div id="myAlert2" class="alert alert-success" style="display: none">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>即将跳转!</strong>登陆成功
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
@@ -176,9 +176,36 @@
                             <label for="checkbox1"></label>
                         </div>
                         <span class="text">Remember me</span>
-                        <button type="submit" class="btn btn-default">登录</button>
+                        <button type="button" class="btn btn-default" id="login">登录</button>
                     </div>
                 </form>
+                <script>
+                    $.ajax(
+                        {
+                            async: false,//取消异步请求
+                    });
+                    $("#login").click(function(){
+                        var tmp1 =  $("#inputEmail3").val();
+                        var tmp2 = $("#inputPassword3").val();
+                        $.post("/lk/login",
+                        {
+                            stuid:tmp1,
+                            pwd:tmp2
+                        },
+                        function(data, status){
+                            if(data=="Successful"){
+                                $("#myAlert2").show();
+                                function st(){  
+                                    window.location.href="/lk/test"; 
+                                }  
+                            setTimeout(st, 1000);                                 
+                            }else{
+                                $("#myAlert1").show(1000);
+                                //window.location.reload();
+                            }
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -190,9 +217,17 @@
     </p>
     <p class="weui-footer__text">Copyright © lk@acm.hitwh.edu.cn</p>
     </div>
-  <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
 
+    <!--<script>
+        $("#myAlert").hide();
+    </script>-->
+        <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+
+
+    <!-- 如果使用了某些拓展插件还需要额外的JS -->
+    <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/swiper.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/city-picker.min.js"></script>
 </body>
 
 </html>
