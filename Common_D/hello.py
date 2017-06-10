@@ -1,11 +1,12 @@
 from flask import Flask,render_template,url_for,session,request,session,Blueprint
 from database import db_session,init_db
-from models import User
+from models import User,Stu
 import json
 import requests
 from get_accesstoken import access_token
 import random
 from bs4 import BeautifulSoup
+
 
 app = Flask(__name__,static_url_path='/lk/static')
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
@@ -36,6 +37,9 @@ def login():
     res = requests.post('http://222.194.15.1:7777/pls/wwwbks/bks_login2.login',data, headers = headers)
     soup = BeautifulSoup(res.text,"html.parser")
     if soup.title:
+        newStu = Stu('sssss', data['stuid'])
+        db_session.add(newStu)
+        db_session.commit()
         return "Successful"
     return "Fail"
 
