@@ -37,7 +37,7 @@ def login():
     res = requests.post('http://222.194.15.1:7777/pls/wwwbks/bks_login2.login',data, headers = headers)
     soup = BeautifulSoup(res.text,"html.parser")
     if soup.title:
-        newStu = Stu('sssss', data['stuid'])
+        newStu = Stu('aaaa', data['stuid'])
         db_session.add(newStu)
         db_session.commit()
         return "Successful"
@@ -71,6 +71,12 @@ def Maptest():
 def Mapserch():
     return render_template('mapserch.html', Session = session)
 
+
+
+
+@webapp.route('/selector')
+def selector():
+    return render_template('selector.html', Session = session)
 
 
 app.register_blueprint(webapp)
