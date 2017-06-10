@@ -26,6 +26,8 @@ def index():
         if openid:
             print('openid:',openid)
             session['openid'] = openid
+            if Stu.query.filter_by(openid = openid).first():
+                return redirect('/maptest')
     return render_template('index.html',Session = session)
 
 @webapp.route('/login', methods=['POST'])
