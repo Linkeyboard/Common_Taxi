@@ -29,7 +29,7 @@ def index():
             Student = Stu.query.filter_by(openid = openid).first()
             if Student:
                 session['stuid'] = Student.stuid
-                return redirect('/maptest')
+                return redirect('/mapserch')
     return render_template('index.html',Session = session)
 
 @webapp.route('/login', methods=['POST'])
@@ -41,7 +41,7 @@ def login():
     res = requests.post('http://222.194.15.1:7777/pls/wwwbks/bks_login2.login',data, headers = headers)
     soup = BeautifulSoup(res.text,"html.parser")
     if soup.title:
-        newStu = Stu('aaaa', data['stuid'])
+        newStu = Stu(session['openid'], data['stuid'])
         session['stuid'] = data['stuid']
         db_session.add(newStu)
         db_session.commit()
@@ -70,10 +70,12 @@ def My():
 
 @webapp.route('/maptest')
 def Maptest():
+    session['area'] = 2
     return render_template('maptest.html', Session = session)
 
 @webapp.route('/mapserch')
 def Mapserch():
+    session['area'] = 1
     return render_template('mapserch.html', Session = session)
 
 
