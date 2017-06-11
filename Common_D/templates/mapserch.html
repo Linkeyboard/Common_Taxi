@@ -4,12 +4,22 @@
 {% endblock %}
 
 {% block body %}
-<div>
-    <span class="glyphicon glyphicon-search" aria-hidden="true" style="white-space:nowrap;width:5%;float:left"></span>
-    <input type="text" id="suggestId" size="20" placeholder="搜索地址" style="width:95%"></input>
+<div class="weui-search-bar" id="searchBar">
+  <form class="weui-search-bar__form">
+    <div class="weui-search-bar__box">
+      <i class="weui-icon-search"></i>
+      <input type="search" class="weui-search-bar__input" id="suggestId" placeholder="搜索" required="">
+      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+    </div>
+    <label class="weui-search-bar__label" id="searchText">
+      <i class="weui-icon-search"></i>
+      <span>搜索</span>
+    </label>
+  </form>
+  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
 </div>
+
 <div id="l-map" style=""></div>
-<div id="r-result">请输入:
 <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
 <script type="text/javascript">
         // 百度地图API功能
@@ -19,9 +29,9 @@
         }
 
         var map = new BMap.Map("l-map");
-        map.centerAndZoom("威海", 13);                   // 初始化地图,设置城市和地图级别。
+        map.centerAndZoom("威海", 12);                   // 初始化地图,设置城市和地图级别。
         var point = new BMap.Point(122.087,37.535);  // 创建点坐标  
-        map.centerAndZoom(point, 13);                 // 初始化地图，设置中心点坐标和地图级别  
+        map.centerAndZoom(point);                 // 初始化地图，设置中心点坐标和地图级别  
         var marker = new BMap.Marker(point);        // 创建标注    
         map.addOverlay(marker); 
         var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
@@ -69,5 +79,41 @@
             });
             local.search(myValue);
         }
+
+                        // 创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint("威海火车站", function(point){
+            if (point) {
+                map.centerAndZoom(point, 16);
+                map.addOverlay(new BMap.Marker(point));
+            }else{
+                alert("您选择地址没有解析到结果!");
+            }
+        }, "威海市");
+                var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint("威海北站", function(point){
+            if (point) {
+                map.centerAndZoom(point, 16);
+                map.addOverlay(new BMap.Marker(point));
+            }else{
+                alert("您选择地址没有解析到结果!");
+            }
+        }, "威海市");
+                        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint("威海港", function(point){
+            if (point) {
+                map.centerAndZoom(point, 16);
+                map.addOverlay(new BMap.Marker(point));
+            }else{
+                alert("您选择地址没有解析到结果!");
+            }
+        }, "威海市");
+        map.setDefaultCursor("url('bird.cur')");   //设置地图默认的鼠标指针样式
+    </script>
+    <script>
+
     </script>
 {% endblock %}

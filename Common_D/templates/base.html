@@ -31,20 +31,20 @@
           <div class="weui-tabbar__icon">
             <i class="glyphicon glyphicon-list-alt" style="color:#0066CC"></i>
           </div>
-          <p class="weui-tabbar__label" style="color:#0066CC">共享拼车</p>
+          <p class="weui-tabbar__label" style="color:#0066CC">去哪儿</p>
           {% else %}
           <div class="weui-tabbar__icon">
             <i class="glyphicon glyphicon-list-alt"></i>
           </div>
-          <p class="weui-tabbar__label" style="color:dimgrey">共享拼车</p>
+          <p class="weui-tabbar__label" style="color:dimgrey">去哪儿</p>
           {% endif %}
         </a>
-        <a href="{{ url_for('webapp.test')}}" class="weui-tabbar__item weui-bar__item--on" style="text-decoration:none">
+        <a href="{{ url_for('webapp.selector')}}" class="weui-tabbar__item weui-bar__item--on" style="text-decoration:none">
           {% if Session['area']==2 %}
           <div class="weui-tabbar__icon">
             <i class="glyphicon glyphicon-cd" style="color: #0066CC;"></i>
           </div>
-          <p class="weui-tabbar__label" style="color:#0066CC">结伴回家</p>
+          <p class="weui-tabbar__label" style="color:#0066CC">共享拼车</p>
           {% else %}
           <div class="weui-tabbar__icon">
             <i class="glyphicon glyphicon-cd"></i>
