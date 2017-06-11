@@ -1,63 +1,59 @@
 {% extends 'base.html' %} {% block body %}
-<div class="weui-grids" style="margin-top: 40%;">
-  <a href="/lk/maptest" class="weui-grid js_grid">
+<div style="text-align:center;margin:0 auto">
+  <span class="glyphicon glyphicon-circle-arrow-down" style="font-size:55px;margin-top: 10%;" aria-hidden="true"></span>
+</div>
+<div class="weui-grids" style="margin-top: 30%;">
+  <a href="/lk/mapserch" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_button.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/destination.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
       热门目的地
     </p>
   </a>
-  <a href="" class="weui-grid js_grid">
+  <a href="" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_cell.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/car.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
-      List
+      发起拼车活动
     </p>
   </a>
-    <a href="" class="weui-grid js_grid">
+    <a href="" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_dialog.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/tmp1.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
-      List
+      查看拼车活动
     </p>
   </a>
-    <a href="" class="weui-grid js_grid">
+    <a href="" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_article.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/plane.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
-      List
-    </p>
-  </a>
-    </a>
-    <a href="" class="weui-grid js_grid">
-    <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_icons.png') }}" alt="">
-    </div>
-    <p class="weui-grid__label">
-      List
+      回家（飞机）
     </p>
   </a>
     </a>
-    <a href="" class="weui-grid js_grid">
+    <a href="" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_cell.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/train2.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
-      List
+       回家（铁路）
     </p>
   </a>
     </a>
-    <a href="" class="weui-grid js_grid">
+    <a href="" class="weui-grid js_grid" style="text-decoration:none">
     <div class="weui-grid__icon">
-      <img src="{{ url_for('static',filename='images/icon_nav_cell.png') }}" alt="">
+      <img src="{{ url_for('static',filename='images/ship3.png') }}" alt="">
     </div>
     <p class="weui-grid__label">
-      List
+       回家（轮船）
     </p>
   </a>
+    </a>
+
 </div>
 {% endblock %}
