@@ -26,7 +26,9 @@ def index():
         if openid:
             print('openid:',openid)
             session['openid'] = openid
-            if Stu.query.filter_by(openid = openid).first():
+            Student = Stu.query.filter_by(openid = openid).first()
+            if Student:
+                session['stuid'] = Student.stuid
                 return redirect('/maptest')
     return render_template('index.html',Session = session)
 
@@ -40,6 +42,7 @@ def login():
     soup = BeautifulSoup(res.text,"html.parser")
     if soup.title:
         newStu = Stu('aaaa', data['stuid'])
+        session['stuid'] = data['stuid']
         db_session.add(newStu)
         db_session.commit()
         return "Successful"
@@ -78,8 +81,43 @@ def Mapserch():
 
 @webapp.route('/selector')
 def selector():
+    session['area'] = 2
     return render_template('selector.html', Session = session)
 
+
+@webapp.route('/newcommontaxi')
+def newcommontaxi():
+    session['area'] = 2
+    return render_template('newcommontaxi.html', Session = session)
+
+
+@webapp.route('/personalinformation')
+def personalinformation():
+    session['area'] = 3
+    if 'stuid' not in session:
+        session['stuid'] = 'XXXXXXX'
+    if 'openid' not in session:
+        session['openid'] = 'aaaa'
+    user = User.query.filter_by(openid = session['openid']).first()
+    has_logged = 0
+    if user:
+        has_logged = 1
+        session['name'] = user.name
+        session['wechatid'] = user.wechatid
+        session['sex'] = user.sex
+        session['phone'] = user.phone
+    return render_template('personalinformation.html', Session = session , has_logged = has_logged)
+
+@webapp.route('/changeinformation',methods=['POST'])
+def changeinformation():
+    session['area'] = 3
+    user = User(session['openid'], request.form['stuname'],request.form['phone'],session['stuid'],request.form['wechatid'],int(request.form['sex']))
+    olduser = User.query.filter_by(openid=session['openid']).first()
+    if olduser:
+        db_session.delete(olduser)
+    db_session.add(user)
+    db_session.commit()
+    return ""
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
