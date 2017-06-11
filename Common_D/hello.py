@@ -1,4 +1,4 @@
-from flask import Flask,render_template,url_for,session,request,session,Blueprint
+from flask import Flask,render_template,url_for,session,request,session,Blueprint,redirect
 from database import db_session,init_db
 from models import User,Stu
 import json
@@ -29,7 +29,7 @@ def index():
             Student = Stu.query.filter_by(openid = openid).first()
             if Student:
                 session['stuid'] = Student.stuid
-                return redirect('/mapserch')
+                return redirect('/lk/mapserch')
     return render_template('index.html',Session = session)
 
 @webapp.route('/login', methods=['POST'])
@@ -108,7 +108,8 @@ def personalinformation():
         session['wechatid'] = user.wechatid
         session['sex'] = user.sex
         session['phone'] = user.phone
-    return render_template('personalinformation.html', Session = session , has_logged = has_logged)
+    information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
+    return render_template('personalinformation.html', Session = session , has_logged = has_logged, information = information.json())
 
 @webapp.route('/changeinformation',methods=['POST'])
 def changeinformation():

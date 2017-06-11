@@ -4,17 +4,19 @@
 </script>
 {% endblock %}
 {% block body %}
+
 <div>
-    <img src={{ url_for('static',filename='images/icon_nav_button.png') }}   style="border: #000 solid 20%;  
+    <img src={{ (information['headimgurl']|safe) }}   style="border: #000 solid 20%;  
                 display: block;  
                 margin: 10% auto;
-                width:35%; 
-                height:35%;  
+                width:38%; 
+                height:38%;  
                 border-radius: 100%;  "></img>
 </div>
 <div style="text-align:center;margin:0 auto;font-size: 130%">
-    <p>{{ Session['stuid'] }}</p>
+    <p>{{ (information['nickname']|safe) }}</p>
 </div>
+
 <div style="">
   <div class="weui-cells__title">个人详细信息>></div>
   <div class="weui-cells weui-cells_form">
@@ -71,7 +73,7 @@
   </div>
   <div class="weui-cells__tips"><<个人详细信息</div>
 <a href="javascript:;" onclick="change()" class="weui-btn weui-btn_primary weui-btn_mini" style="margin-top:5%;margin-left:20%;text-decoration:none">修改</a>
-<a href="javascript:;" class="weui-btn weui-btn_default weui-btn_mini" style="margin-top:5%;margin-left:20%;text-decoration:none">取消</a>
+<a href="javascript:;" onclick="cancel()" class="weui-btn weui-btn_default weui-btn_mini" style="margin-top:5%;margin-left:20%;text-decoration:none">取消</a>
   <script>
    $('input:radio:first').attr('checked', 'checked');
     if ({{ has_logged }}==1){
@@ -98,6 +100,11 @@
             }
         });
     }
+    function cancel(){
+	window.location.href="/lk/my"
+
+    }
   </script>
 </div>
+<br><br><br><br>
 {% endblock %}
