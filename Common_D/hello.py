@@ -1,6 +1,6 @@
 from flask import Flask,render_template,url_for,session,request,session,Blueprint,redirect
 from database import db_session,init_db
-from models import User,Stu
+from models import User,Stu,Order
 import json
 import requests
 from get_accesstoken import access_token
@@ -121,6 +121,17 @@ def changeinformation():
     db_session.add(user)
     db_session.commit()
     return ""
+
+
+@webapp.route('/addtaxi',methods=['POST'])
+def addtaxi():
+    if 'openid' not in session:
+        session['openid'] = 'aaaa'
+    neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],request.form['whenis'])
+    db_session.add(neworder)
+    db_session.commit()
+    return ""
+
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 

@@ -33,3 +33,25 @@ class Stu(Base):
 
     def __repr__(self):
         return '<id %r name %r>' % (self.openid,self.stuid)
+
+
+
+class Order(Base):
+    __tablename__ = 'order'
+    openid = Column(String(50), primary_key=True)
+    fromwhere = Column(String(200))
+    towhere = Column(String(200))
+    whenis = Column(String(200))
+    countis = Column(Integer)
+
+    def __init__(self,openid=None,fromwhere="哈尔滨工业大学（威海）", towhere = None, whenis = None, countis = 0):
+        self.openid = openid
+        self.fromwhere = fromwhere
+        self.towhere = towhere
+        self.whenis = whenis
+        self.countis = countis
+        
+
+
+    def __repr__(self):
+        return '<id %r towhere %r count %r>' % (self.openid,self.towhere,self.countis)
