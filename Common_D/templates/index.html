@@ -7,7 +7,8 @@
   <title>COMMON_TAXI</title>
   <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
   <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
-  
+ <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+ </script>
   <link rel="stylesheet" href="{{ url_for('static',filename='weui.css') }}">
   <link rel="stylesheet" href="{{ url_for('static',filename='weui.min.css') }}">
   <script src="//libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
@@ -209,8 +210,10 @@
             </div>
         </div>
     </div>
-
-    <div class="weui-footer weui-footer_fixed-bottom">
+    <script>
+        $("input").focus(function(){$("#footer").hide();});
+    </script>
+    <div class="weui-footer weui-footer_fixed-bottom" id="footer" style="position:absolute;bottom:10px;">
 
     <p class="weui-footer__links">
         <a href="http://www.hitwh.edu.cn/teachlink/index.htm" class="weui-footer__link">哈尔滨工业大学（威海）教务系统</a>

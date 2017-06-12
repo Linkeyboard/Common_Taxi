@@ -25,11 +25,15 @@ class Stu(Base):
     __tablename__ = 'stu'
     openid = Column(String(50), primary_key=True)
     stuid = Column(String(100))
+    nickname = Column(String(100))
+    headimgurl = Column(String(200))
 
-    def __init__(self,openid=None, stuid=None):
+
+    def __init__(self,openid=None, stuid=None, nickname= None, headimgurl=None):
         self.openid = openid
         self.stuid = stuid
-
+        self.nickname = nickname
+        self.headimgurl = headimgurl
 
     def __repr__(self):
         return '<id %r name %r>' % (self.openid,self.stuid)

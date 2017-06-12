@@ -31,7 +31,7 @@ def index():
             if information:
                 session['nickname'] = information.json()['nickname']
                 session['headimgurl'] = information.json()['headimgurl']
-                print(session['nickname'])
+                print(session['nickname'],session['headimgurl'])
             Student = Stu.query.filter_by(openid = openid).first()
             if Student:
                 session['stuid'] = Student.stuid
@@ -47,7 +47,7 @@ def login():
     res = requests.post('http://222.194.15.1:7777/pls/wwwbks/bks_login2.login',data, headers = headers)
     soup = BeautifulSoup(res.text,"html.parser")
     if soup.title:
-        newStu = Stu(session['openid'], data['stuid'])
+        newStu = Stu(session['openid'], data['stuid'],session['nickname'],session['headimgurl'])
         session['stuid'] = data['stuid']
         db_session.add(newStu)
         db_session.commit()
@@ -141,7 +141,24 @@ def addtaxi():
 
 @webapp.route('/showcommontaxi')
 def showcommontaxi():
-    return render_template('showcommontaxi.html', Session = session)
+    orderlist = Order.query.all()
+    print('orderlist',orderlist)
+    data = {}
+    datasend = []
+    for i in orderlist:
+        data = {}
+        stutmp = Stu.query.filter_by(openid = i.openid).first()
+        if stutmp:
+            data['openid'] = stutmp.openid
+            data['nickname'] = stutmp.nickname
+            data['headimgurl'] = stutmp.headimgurl
+            data['towhere'] = i.towhere
+            data['fromwhere'] = i.fromwhere
+            data['whenis'] = i.whenis
+            data['countis'] = i.countis
+            datasend.append(data)
+    print('datasend',datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend)
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
