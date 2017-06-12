@@ -1,15 +1,16 @@
 {% extends 'base.html' %} {% block body %}
 
 <div class="weui-panel weui-panel_access">
-  <div class="weui-panel__hd">查看拼车活动</div>
+  <div class="weui-panel__hd">查看拼车活动(点击查看详细信息)</div>
   <div class="weui-panel__bd">
     {% for i in data %}
-    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    <a href="{{ url_for('webapp.taxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
       <div class="weui-media-box__hd">
         <img class="weui-media-box__thumb" src={{ i['headimgurl'] }}>
       </div>
+      <p style="display: none" id="tmpid">{{ i['id'] }}</p>
       <div class="weui-media-box__bd">
-        <h4 class="weui-media-box__desc">{{ i['nickname']  }}</h4>
+        <h4 class="weui-media-box__desc" id="nickname">{{ i['nickname']  }}</h4>
         <p class="weui-media-box__desc">目的地: {{ i['towhere'] }}</p>
         <p class="weui-media-box__desc">时间: {{ i['whenis'] }}</p>
       </div>
@@ -23,5 +24,19 @@
     </a>    
   </div>
 </div>
+<script>
+  function showshow(dom){
+    var tmpid = $(dom).find("p").html();
+    $.get(
+      '/lk/taxidetail',
+      {
+          tmpid:tmpid
+      },
+      function(data,status){
+
+      }
+    );
+  }
+</script>
 <br><br><br><br>
 {% endblock %}

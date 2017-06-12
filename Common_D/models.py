@@ -60,3 +60,21 @@ class Order(Base):
 
     def __repr__(self):
         return '<id %r towhere %r count %r>' % (self.openid,self.towhere,self.countis)
+
+
+
+class Join(Base):
+    __tablename__ = 'joining'
+    joinid = Column(Integer, primary_key=True, autoincrement = True)
+    openid = Column(String(50))
+    followid = Column(Integer)
+
+    def __init__(self,openid=None, followid = 0):
+        self.openid = openid
+        self.followid = followid
+        
+
+
+    def __repr__(self):
+        return '<openid %r follow %r>' % (self.openid,self.followid)
+

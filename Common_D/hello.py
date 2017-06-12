@@ -1,6 +1,6 @@
 from flask import Flask,render_template,url_for,session,request,session,Blueprint,redirect
 from database import db_session,init_db
-from models import User,Stu,Order
+from models import User,Stu,Order,Join
 import json
 import requests
 from get_accesstoken import access_token
@@ -156,9 +156,38 @@ def showcommontaxi():
             data['fromwhere'] = i.fromwhere
             data['whenis'] = i.whenis
             data['countis'] = i.countis
+            data['id'] = i.id
             datasend.append(data)
     print('datasend',datasend)
     return render_template('showcommontaxi.html', Session = session, data = datasend)
+
+@webapp.route('/taxidetail/<tmpid>',methods=['POST','GET'])
+def taxidetail(tmpid):
+    findorder = Order.query.filter_by(id=tmpid).first()
+    who = Stu.query.filter_by(openid=findorder.openid).first()
+    data={}
+    data['headimgurl'] = who.headimgurl
+    data['nickname'] = who.nickname
+    data['towhere'] = findorder.towhere
+    data['fromwhere'] = findorder.fromwhere
+    data['whenis'] = findorder.whenis
+    data['countis'] = findorder.countis + 1
+    data['id'] = findorder.id
+    return render_template('detail.html',Session = session, data = data)
+
+# @webapp.route('/showdetail')
+# def showdetail():
+
+@webapp.route('/addfollow',methods=['POST'])
+def addfollow():
+    if 'openid' not in session:
+        session['openid'] = 'aaaa'
+    newjoin = Join(session['openid'],request.form['followid'])
+    db_session.add(newjoin)
+    db_session.commit()
+    return ""
+
+
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
