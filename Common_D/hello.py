@@ -26,6 +26,8 @@ def index():
         if openid:
             print('openid:',openid)
             session['openid'] = openid
+            information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
+            print(information.json())
             Student = Stu.query.filter_by(openid = openid).first()
             if Student:
                 session['stuid'] = Student.stuid
@@ -64,7 +66,6 @@ def My():
     print('get-openid:',session.get('openid',None))
     if 'openid' in session:
         information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
-
         return render_template('my.html', Session = session, information = information.json())
     return 'No openid'
 
