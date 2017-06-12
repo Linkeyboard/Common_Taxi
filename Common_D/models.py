@@ -37,8 +37,9 @@ class Stu(Base):
 
 
 class Order(Base):
-    __tablename__ = 'order'
-    openid = Column(String(50), primary_key=True)
+    __tablename__ = 'taxiorder'
+    id = Column(Integer, primary_key=True, autoincrement = True)
+    openid = Column(String(50))
     fromwhere = Column(String(200))
     towhere = Column(String(200))
     whenis = Column(String(200))
