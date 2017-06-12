@@ -28,6 +28,10 @@ def index():
             session['openid'] = openid
             information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
             print(information.json())
+            if information:
+                session['nickname'] = information.json()['nickname']
+                session['headimgurl'] = information.json()['headimgurl']
+                print(session['nickname'])
             Student = Stu.query.filter_by(openid = openid).first()
             if Student:
                 session['stuid'] = Student.stuid
@@ -133,6 +137,11 @@ def addtaxi():
     db_session.commit()
     return ""
 
+
+
+@webapp.route('/showcommontaxi')
+def showcommontaxi():
+    return render_template('showcommontaxi.html', Session = session)
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
