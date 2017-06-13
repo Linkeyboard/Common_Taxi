@@ -183,9 +183,13 @@ def addfollow():
     if 'openid' not in session:
         session['openid'] = 'aaaa'
     newjoin = Join(session['openid'],request.form['followid'])
-    db_session.add(newjoin)
-    db_session.commit()
-    return ""
+    findjoin = Join.query.filter_by(openid = session['openid'], followid = request.form['followid']).first()
+    if not findjoin:
+        db_session.add(newjoin)
+        db_session.commit()
+        return "success"
+    else:
+        return "fail"
 
 
 

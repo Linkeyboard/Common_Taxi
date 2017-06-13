@@ -1,5 +1,12 @@
 {% extends 'base.html' %} {% block body %}
-
+<div id="myAlert1" class="alert alert-warning" style="display: none;" >
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong></strong>已添加！
+</div>
+<div id="myAlert2" class="alert alert-success" style="display: none">
+<a href="#" class="close" data-dismiss="alert">&times;</a>
+<strong></strong>加入成功！
+</div>
 <div id="allmap"></div>
 <div class="weui-form-preview">
   <div class="weui-form-preview__hd">
@@ -64,7 +71,13 @@
                 followid:{{ data['id'] }}
             },
             function(data,status){
-
+                if(data=="success"){
+                   $.toast("操作成功");
+                   alert("操作成功");
+                }else{
+                    alert("操作成功");
+                    $.toast("禁止操作", "forbidden");
+                }
             });
     }
 </script>
