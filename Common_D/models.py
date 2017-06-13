@@ -78,3 +78,27 @@ class Join(Base):
     def __repr__(self):
         return '<openid %r follow %r>' % (self.openid,self.followid)
 
+
+
+
+
+class GOHOME(Base):
+    __tablename__ = 'gohome'
+    homeid = Column(Integer, primary_key=True, autoincrement = True)
+    openid = Column(String(100))
+    fromhome = Column(String(100))
+    tohome = Column(String(100))
+    typehome = Column(String(100))
+    whenhome = Column(String(100))
+    counthome = Column(String(100))
+
+    def __init__(self,openid=None, fromhome = None, tohome = None,typehome = None, whenhome = None, counthome = 0):
+        self.openid = openid
+        self.fromhome = fromhome
+        self.tohome = tohome
+        self.typehome = typehome
+        self.whenhome = whenhome
+        
+
+    def __repr__(self):
+        return '<openid %r fromhome %r tohome %r>' % (self.openid,self.fromhome,self.tohome)

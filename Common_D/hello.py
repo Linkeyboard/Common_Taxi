@@ -65,6 +65,8 @@ def hello_world():
 
 @webapp.route('/my')
 def My():
+    if 'openid' not in session:
+        session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
     session['area'] = 3
     #print(session.get('test',None))
     print('get-openid:',session.get('openid',None))
@@ -141,7 +143,7 @@ def addtaxi():
 
 @webapp.route('/showcommontaxi')
 def showcommontaxi():
-    orderlist = Order.query.all()
+    orderlist = Order.query.filter(Order.countis < 5).all()
     print('orderlist',orderlist)
     data = {}
     datasend = []
@@ -160,7 +162,7 @@ def showcommontaxi():
             data['openid'] = i.openid
             datasend.append(data)
     print('datasend',datasend)
-    return render_template('showcommontaxi.html', Session = session, data = datasend, ismy = "0")
+    return render_template('showcommontaxi.html', Session = session, data = datasend)
 
 @webapp.route('/taxidetail/<tmpid>',methods=['POST','GET'])
 def taxidetail(tmpid):
@@ -175,7 +177,10 @@ def taxidetail(tmpid):
     data['countis'] = findorder.countis + 1
     data['id'] = findorder.id
     data['openid'] = who.openid
-    return render_template('detail.html',Session = session, data = data)
+    if Join.query.filter_by(followid = tmpid,openid = session['openid']).first():
+        return render_template('mydetail.html',Session = session, data = data)
+    else:
+        return render_template('detail.html',Session = session, data = data)
 
 
 @webapp.route('/mytaxidetail/<tmpid>',methods=['POST','GET'])
@@ -204,6 +209,7 @@ def addfollow():
     findjoin = Join.query.filter_by(openid = session['openid'], followid = request.form['followid']).first()
     if not findjoin:
         db_session.add(newjoin)
+        Order.query.filter_by(id = request.form['followid']).update({Order.countis:Order.countis+1})
         db_session.commit()
         return "success"
     else:
@@ -231,7 +237,36 @@ def mytaxi():
             data['id'] = i.id
             datasend.append(data)
     print('datasend',datasend)
-    return render_template('showcommontaxi.html', Session = session, data = datasend, ismy = "1")
+    return render_template('showcommontaxi.html', Session = session, data = datasend)
+
+
+@webapp.route('/myjoin')
+def myjoin():
+    print('openid',session['openid'])
+    tmpjoin = Join.query.filter_by(openid = session['openid']).all()
+    data = {}
+    datasend = []
+    for i in tmpjoin:
+        data = {}
+        tmporder = Order.query.filter_by(id = i.followid).first()
+        if tmporder:
+            data['towhere'] = tmporder.towhere
+            data['fromwhere'] = tmporder.fromwhere
+            data['whenis'] = tmporder.whenis
+            data['countis'] = tmporder.countis
+            data['id'] = tmporder.id
+            tmpstu = Stu.query.filter_by(openid = tmporder.openid).first()
+            if tmpstu:
+                data['headimgurl'] = tmpstu.headimgurl
+                data['nickname'] = tmpstu.nickname
+            datasend.append(data)
+    return render_template('showcommontaxi.html', Session = session, data = datasend)
+
+
+@webapp.route('/addhome/<how>')
+def addhome(how):
+    session['area'] = 2
+    return render_template('addhome.html', Session = session,how = how)
 
 
 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery WeUI</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/demos.css') }}">
+    <style>
+      .weui-label {
+        width: 70px;
+      }
+    </style>
+  </head>
+
+  <body ontouchstart>
+
+
+    <header class='demos-header'>
+    <div class="weui-grid__icon">
+    {% if how == "1" %}
+      <img src="{{ url_for('static',filename='images/plane.png') }}" alt="">
+    {% elif how == "2" %}
+      <img src="{{ url_for('static',filename='images/train2.png') }}" alt="">
+    {% elif how == "3" %}
+      <img src="{{ url_for('static',filename='images/ship3.png') }}" alt="">
+    {% endif %}
+    </div>
+    </header>
+
+    
+    <div class="weui-cells weui-cells_form">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="name" class="weui-label">出发地</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="start" type="text" value="山东省 威海市 环翠区">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="date" class="weui-label">目的地</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="end" type="text" value="">
+        </div>
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd"><label for="" class="weui-label">时间</label></div>
+      <div class="weui-cell__bd">
+        <input class="weui-input" type="datetime-local" value="" placeholder="" id="time">
+      </div>
+    </div>
+ <div class="weui-form-preview__ft">
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="add()">发布</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/showcommontaxi">返回</a>
+  </div>
+<script src="{{ url_for('static', filename='js/jquery-2.1.4.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fastclick.js') }}"></script>
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+  });
+</script>
+<script src="{{ url_for('static', filename='js/jquery-weui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/city-picker.js') }}"></script>
+<script>
+    function add(){
+        console.log($("#end").val());
+        console.log($("#time").val());
+    }
+</script>
+
+    <script>
+      $("#start").cityPicker({
+        title: "选择出发地",
+        onChange: function (picker, values, displayValues) {
+          console.log(values, displayValues);
+        }
+      });
+      $("#end").cityPicker({
+        title: "选择目的地"
+      });
+      $("#home-city").cityPicker({
+        title: "选择目的地",
+        showDistrict: false,
+        onChange: function (picker, values, displayValues) {
+          console.log(values, displayValues);
+        }
+      });
+    </script>
+  </body>
+</html>

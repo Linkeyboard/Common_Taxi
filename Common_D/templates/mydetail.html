@@ -44,8 +44,8 @@
     </div>
   </div>
   <div class="weui-form-preview__ft">
-    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="">删除</a>
-    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/lk/showcommontaxi">返回</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_warn" href="javascript:" onclick="">删除</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/showcommontaxi">返回</a>
   </div>
 </div>
 
@@ -59,8 +59,8 @@
 	function yyy(rs){           
 		//alert("打车总费用为："+rs.taxiFare.day.totalFare+"元");     //计算出白天的打车费用的总价
         var cost = rs.taxiFare.day.totalFare/{{ data['countis']+1 }}
-        $('#oldcost').text(cost+"元");
-        $('#save').text(rs.taxiFare.day.totalFare-cost+"元");
+        $('#oldcost').text(cost.toFixed(2)+"元");
+        $('#save').text((rs.taxiFare.day.totalFare-cost).toFixed(2)+"元");
 	}
 </script>
 <script>
