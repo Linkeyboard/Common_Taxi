@@ -73,10 +73,8 @@
             function(data,status){
                 if(data=="success"){
                    $.toast("操作成功");
-                   alert("操作成功");
                 }else{
-                    alert("操作成功");
-                    $.toast("禁止操作", "forbidden");
+                    $.toast("已添加", "cancel");
                 }
             });
     }
