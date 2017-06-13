@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% block body %}
+<div id="myAlert1" class="alert alert-warning" style="display: none;" >
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong></strong>已添加！
+</div>
+<div id="myAlert2" class="alert alert-success" style="display: none">
+<a href="#" class="close" data-dismiss="alert">&times;</a>
+<strong></strong>加入成功！
+</div>
+<div id="allmap"></div>
+<div class="weui-form-preview">
+  <div class="weui-form-preview__hd">
+    <label class="weui-form-preview__label">发起人</label>
+    <em class="weui-form-preview__value">{{ data['nickname'] }}</em>
+  </div>
+  <div class="weui-form-preview__bd">
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">出发地</label>
+      <span class="weui-form-preview__value">{{ data['fromwhere'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">目的地</label>
+      <span class="weui-form-preview__value">{{ data['towhere'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">时间</label>
+      <span class="weui-form-preview__value">{{ data['whenis'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">车内人数</label>
+    <span class="weui-form-preview__value">{{ data['countis'] }}人</span>
+    </div>
+    <div class="weui-form-preview__item">
+    <label class="weui-form-preview__label">预计花费</label>
+    <span class="weui-form-preview__value" id="oldcost"></span>
+    </div>
+        <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">节省花费</label>
+    <span class="weui-form-preview__value" id="save"></span>
+    </div>
+    <div class="weui-form-preview__item">
+    <label class="weui-form-preview__label">信用等级</label>
+    <span class="weui-form-preview__value"></span>
+    </div>
+  </div>
+  <div class="weui-form-preview__ft">
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="">删除</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/lk/showcommontaxi">返回</a>
+  </div>
+</div>
+
+<script>
+    $("div#allmap").css("height", $(window).height()*0.4);
+    var map = new BMap.Map("allmap");
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+	var driving = new BMap.DrivingRoute(map, {onSearchComplete:yyy,renderOptions:{map: map, autoViewport: true}}); 
+	driving.search("{{ data['fromwhere'] }}", "{{ data['towhere'] }}");   //驾车查询
+    //driving.search("威海站", "威海北站");   //驾车查询
+	function yyy(rs){           
+		//alert("打车总费用为："+rs.taxiFare.day.totalFare+"元");     //计算出白天的打车费用的总价
+        var cost = rs.taxiFare.day.totalFare/{{ data['countis']+1 }}
+        $('#oldcost').text(cost+"元");
+        $('#save').text(rs.taxiFare.day.totalFare-cost+"元");
+	}
+</script>
+<script>
+    function change(){
+
+    }
+</script>
+<br><br><br><br>
+{% endblock %}

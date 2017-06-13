@@ -4,7 +4,11 @@
   <div class="weui-panel__hd">查看拼车活动(点击查看详细信息)</div>
   <div class="weui-panel__bd">
     {% for i in data %}
+    {% if i['openid'] != Session['openid'] %}
     <a href="{{ url_for('webapp.taxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    {% else %}
+    <a href="{{ url_for('webapp.mytaxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    {% endif %}
       <div class="weui-media-box__hd">
         <img class="weui-media-box__thumb" src={{ i['headimgurl'] }}>
       </div>
@@ -25,6 +29,7 @@
   </div>
 </div>
 <script>
+  console.log({{ ismy }})
   function showshow(dom){
     var tmpid = $(dom).find("p").html();
     $.get(

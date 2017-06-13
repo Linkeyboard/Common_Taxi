@@ -104,7 +104,7 @@ def personalinformation():
     if 'stuid' not in session:
         session['stuid'] = 'XXXXXXX'
     if 'openid' not in session:
-        session['openid'] = 'aaaa'
+        session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
     user = User.query.filter_by(openid = session['openid']).first()
     has_logged = 0
     if user:
@@ -131,7 +131,7 @@ def changeinformation():
 @webapp.route('/addtaxi',methods=['POST'])
 def addtaxi():
     if 'openid' not in session:
-        session['openid'] = 'aaaa'
+        session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
     neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],request.form['whenis'])
     db_session.add(neworder)
     db_session.commit()
@@ -157,9 +157,10 @@ def showcommontaxi():
             data['whenis'] = i.whenis
             data['countis'] = i.countis
             data['id'] = i.id
+            data['openid'] = i.openid
             datasend.append(data)
     print('datasend',datasend)
-    return render_template('showcommontaxi.html', Session = session, data = datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend, ismy = "0")
 
 @webapp.route('/taxidetail/<tmpid>',methods=['POST','GET'])
 def taxidetail(tmpid):
@@ -173,7 +174,24 @@ def taxidetail(tmpid):
     data['whenis'] = findorder.whenis
     data['countis'] = findorder.countis + 1
     data['id'] = findorder.id
+    data['openid'] = who.openid
     return render_template('detail.html',Session = session, data = data)
+
+
+@webapp.route('/mytaxidetail/<tmpid>',methods=['POST','GET'])
+def mytaxidetail(tmpid):
+    findorder = Order.query.filter_by(id=tmpid).first()
+    who = Stu.query.filter_by(openid=findorder.openid).first()
+    data={}
+    data['headimgurl'] = who.headimgurl
+    data['nickname'] = who.nickname
+    data['towhere'] = findorder.towhere
+    data['fromwhere'] = findorder.fromwhere
+    data['whenis'] = findorder.whenis
+    data['countis'] = findorder.countis + 1
+    data['id'] = findorder.id
+    data['openid'] = who.openid
+    return render_template('mydetail.html',Session = session, data = data)
 
 # @webapp.route('/showdetail')
 # def showdetail():
@@ -181,7 +199,7 @@ def taxidetail(tmpid):
 @webapp.route('/addfollow',methods=['POST'])
 def addfollow():
     if 'openid' not in session:
-        session['openid'] = 'aaaa'
+        session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
     newjoin = Join(session['openid'],request.form['followid'])
     findjoin = Join.query.filter_by(openid = session['openid'], followid = request.form['followid']).first()
     if not findjoin:
@@ -190,6 +208,30 @@ def addfollow():
         return "success"
     else:
         return "fail"
+
+@webapp.route('/mytaxi')
+def mytaxi():
+    if 'openid' not in session:
+        session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
+    print(session['openid'])
+    myorder = Order.query.filter_by(openid = session['openid']).all()
+    data = {}
+    datasend = []
+    for i in myorder:
+        data = {}
+        stutmp = Stu.query.filter_by(openid = i.openid).first()
+        if stutmp:
+            data['openid'] = stutmp.openid
+            data['nickname'] = stutmp.nickname
+            data['headimgurl'] = stutmp.headimgurl
+            data['towhere'] = i.towhere
+            data['fromwhere'] = i.fromwhere
+            data['whenis'] = i.whenis
+            data['countis'] = i.countis
+            data['id'] = i.id
+            datasend.append(data)
+    print('datasend',datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend, ismy = "1")
 
 
 
