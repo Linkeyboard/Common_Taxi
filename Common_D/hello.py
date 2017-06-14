@@ -403,6 +403,7 @@ def decline():
         deleteorder = Join.query.filter_by(followid = deleteid, openid = session['openid']).first()
         whichorder = Order.query.filter_by(id = deleteid).first()
         whoinformatin = User.query.filter_by(openid = session['openid']).first()
+        whoinformatin.countis = whoinformatin.countis - 1
         senddata = {
             "touser":whichorder.openid,
             "template_id":"6tqxJR2dlL2H0qBI6_ktVmG6-jIua1Aa7ST6hDNCb-s",
