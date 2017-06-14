@@ -144,7 +144,7 @@ def addtaxi():
 @webapp.route('/showcommontaxi')
 def showcommontaxi():
     orderlist = Order.query.filter(Order.countis < 5).all()
-    print('orderlist',orderlist)
+    #print('orderlist',orderlist)
     data = {}
     datasend = []
     for i in orderlist:
@@ -213,32 +213,33 @@ def addfollow():
         db_session.commit()
         tmporder = Order.query.filter_by(id = request.form['followid']).first()
         tmpuser = User.query.filter_by(openid = tmporder.openid).first()
+        print(tmpuser,tmporder)
         senddata = {
             "touser":session['openid'],
-            "template_id":"owJYHbdRfq8A8qgZMRz0uhgHcCxcLN8DRWzYxW4y0Uc",
+            "template_id":"1E-l9Wj7PClvKCkicTJ1F0yJKI60TNbrvk5QWjLfrtE",
             "url":"https://www.baidu.com",
             "data":{
                 "first": {
                     "value":"提示：加入活动成功！",
                     "color":"#173177"
                  },
-                "keynote1":{
+                "keyword1":{
                     "value":tmpuser.name,
                     "color":"#173177"
                  },
-                "keynote2": {
+                "keyword2": {
                     "value":tmpuser.wechatid,
                     "color":"#173177"
                    },
-                "keynote3": {
+                "keyword3": {
                     "value":tmpuser.phone,
                     "color":"#173177"
                    },
-                "keynote4": {
+                "keyword4": {
                     "value":tmporder.whenis,
                     "color":"#173177"
                    },
-                "keynote5": {
+                "keyword5": {
                     "value":tmporder.fromwhere,
                     "color":"#173177"
                    },
@@ -248,6 +249,7 @@ def addfollow():
                    }
             }
         }
+        print('senddata',senddata)
         requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))
         return "success"
     else:
