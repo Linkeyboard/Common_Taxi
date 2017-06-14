@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="weui-form-preview__ft">
-    <a class="weui-form-preview__btn weui-form-preview__btn_warn" href="javascript:" onclick="">删除</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_warn" href="javascript:" onclick="decline()">删除</a>
     <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/showcommontaxi">返回</a>
   </div>
 </div>
@@ -64,8 +64,20 @@
 	}
 </script>
 <script>
-    function change(){
-
+    function decline(){
+        $.post('/lk/decline',
+        {
+            whenis:"{{ data['whenis'] }}",
+            deleteid: "{{ data['id']}}",
+            my:"{{ data['my'] }}",
+        },
+        function(data,status){
+            if(data == "Fail"){
+                $.toast("开始时间不足6小时，信用等级下降", "cancel");
+            }else{
+                $.toast("操作成功");
+            }
+        });
     }
 </script>
 <br><br><br><br>

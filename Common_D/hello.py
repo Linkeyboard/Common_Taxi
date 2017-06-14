@@ -141,7 +141,7 @@ def addtaxi():
     #time2 = time.strptime(time1,'%Y-%m-%dT%H:%M:%S')
     time2 = time.strptime(time1[:16],'%Y-%m-%dT%H:%M')
     time3 = datetime.datetime(*time2[:5])
-    restime = time3.strftime("%Y-%m-%d-%H:%M")
+    restime = time3.strftime("%Y-%m-%d %H:%M")
     neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],restime)
     db_session.add(neworder)
     db_session.commit()
@@ -185,6 +185,7 @@ def taxidetail(tmpid):
     data['countis'] = findorder.countis + 1
     data['id'] = findorder.id
     data['openid'] = who.openid
+    data['my'] = "0"
     if Join.query.filter_by(followid = tmpid,openid = session['openid']).first():
         return render_template('mydetail.html',Session = session, data = data)
     else:
@@ -203,7 +204,8 @@ def mytaxidetail(tmpid):
     data['whenis'] = findorder.whenis
     data['countis'] = findorder.countis + 1
     data['id'] = findorder.id
-    data['openid'] = who.openid
+    data['openid'] = session['openid']
+    data['my'] = "1"
     return render_template('mydetail.html',Session = session, data = data)
 
 # @webapp.route('/showdetail')
@@ -351,9 +353,102 @@ def addhome(how):
 
 
 
-@webapp.route('/decline')
+@webapp.route('/decline',methods=['POST'])
 def decline():
-    return ""
+    deletemy = request.form['my']
+    deleteid = request.form['deleteid']
+    if deletemy == "1":
+        deleteorder = Order.query.filter_by(id = deleteid).first()
+        tell = Join.query.filter_by(followid = deleteid).all()
+        whoinformatin = User.query.filter_by(openid = session['openid']).first()
+        for i in tell:
+            senddata = {
+                "touser":i.openid,
+                "template_id":"d8zSDExtUC8xoHy4QzJpP_Shadu1mSjVYjvYbtDKA-8",
+                "url":"https://www.baidu.com",
+                "data":{
+                    "first": {
+                        "value":"活动取消",
+                        "color":"#173177"
+                    },
+                    "keyword1":{
+                        "value":whoinformatin.name,
+                        "color":"#173177"
+                    },
+                    "keyword2": {
+                        "value":whoinformatin.wechatid,
+                        "color":"#173177"
+                    },
+                    "keyword3": {
+                        "value":whoinformatin.phone,
+                        "color":"#173177"
+                    },
+                    "keyword4": {
+                        "value":deleteorder.whenis,
+                        "color":"#173177"
+                    },
+                    "keyword5": {
+                        "value":deleteorder.fromwhere,
+                        "color":"#173177"
+                    },
+                    "remark":{
+                        "value":"十分抱歉，发起人已取消活动",
+                        "color":"#173177"
+                    }
+                }
+            }
+            requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))            
+        db_session.delete(deleteorder)
+    else:
+        deleteorder = Join.query.filter_by(followid = deleteid, openid = session['openid']).first()
+        whichorder = Order.query.filter_by(id = deleteid).first()
+        whoinformatin = User.query.filter_by(openid = session['openid']).first()
+        senddata = {
+            "touser":whichorder.openid,
+            "template_id":"6tqxJR2dlL2H0qBI6_ktVmG6-jIua1Aa7ST6hDNCb-s",
+            "url":"https://www.baidu.com",
+            "data":{
+                "first": {
+                    "value":"活动取消",
+                    "color":"#173177"
+                },
+                "keyword1":{
+                    "value":whoinformatin.name,
+                    "color":"#173177"
+                },
+                "keyword2": {
+                    "value":whoinformatin.wechatid,
+                    "color":"#173177"
+                },
+                "keyword3": {
+                    "value":whoinformatin.phone,
+                    "color":"#173177"
+                },
+                "keyword4": {
+                    "value":whichorder.whenis,
+                    "color":"#173177"
+                },
+                "keyword5": {
+                    "value":whichorder.fromwhere,
+                    "color":"#173177"
+                },
+                "remark":{
+                    "value":"该位同学取消参加活动",
+                    "color":"#173177"
+                }
+            }
+        }
+        requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))     
+        db_session.delete(deleteorder)
+    db_session.commit()
+    time1 = str(request.form['whenis'])
+    time2 = time.strptime(time1,'%Y-%m-%d %H:%M')
+    time3 = datetime.datetime(*time2[:5])
+    interval = time3 - datetime.datetime.now()
+    if interval.days == 0 and interval.seconds < 21600:
+        return "Fail"
+    else:
+        return "Success"
 
 
 app.register_blueprint(webapp)

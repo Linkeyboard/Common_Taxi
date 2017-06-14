@@ -9,8 +9,9 @@ class User(Base):
     stuid = Column(String(100))
     wechatid = Column(String(100))
     sex = Column(Integer)
+    credit = Column(Integer)
 
-    def __init__(self,openid=None, name=None, phone=None, stuid=None, wechatid=None, sex=1):
+    def __init__(self,openid=None, name=None, phone=None, stuid=None, wechatid=None, sex=1 , credit = 100):
         self.openid = openid
         self.name = name
         self.phone = phone
