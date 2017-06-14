@@ -176,6 +176,7 @@ def showcommontaxi():
 def taxidetail(tmpid):
     findorder = Order.query.filter_by(id=tmpid).first()
     who = Stu.query.filter_by(openid=findorder.openid).first()
+    finduser = User.query.filter_by(openid = who.openid).first()
     data={}
     data['headimgurl'] = who.headimgurl
     data['nickname'] = who.nickname
@@ -186,6 +187,7 @@ def taxidetail(tmpid):
     data['id'] = findorder.id
     data['openid'] = who.openid
     data['my'] = "0"
+    data['credit'] = finduser.credit
     if Join.query.filter_by(followid = tmpid,openid = session['openid']).first():
         return render_template('mydetail.html',Session = session, data = data)
     else:
@@ -196,6 +198,7 @@ def taxidetail(tmpid):
 def mytaxidetail(tmpid):
     findorder = Order.query.filter_by(id=tmpid).first()
     who = Stu.query.filter_by(openid=findorder.openid).first()
+    finduser = User.query.filter_by(openid = who.openid).first()
     data={}
     data['headimgurl'] = who.headimgurl
     data['nickname'] = who.nickname
@@ -206,6 +209,7 @@ def mytaxidetail(tmpid):
     data['id'] = findorder.id
     data['openid'] = session['openid']
     data['my'] = "1"
+    data['credit'] = finduser.credit
     return render_template('mydetail.html',Session = session, data = data)
 
 # @webapp.route('/showdetail')
@@ -355,10 +359,20 @@ def addhome(how):
 
 @webapp.route('/decline',methods=['POST'])
 def decline():
+    time1 = str(request.form['whenis'])
+    time2 = time.strptime(time1,'%Y-%m-%d %H:%M')
+    time3 = datetime.datetime(*time2[:5])
+    interval = time3 - datetime.datetime.now()
+    if interval.days == 0 and interval.seconds < 21600:
+        ans = "Fail"
+    else:
+        ans = "Success"
     deletemy = request.form['my']
     deleteid = request.form['deleteid']
     if deletemy == "1":
         deleteorder = Order.query.filter_by(id = deleteid).first()
+        if deleteorder.countis < 1:
+            ans = "Success"
         tell = Join.query.filter_by(followid = deleteid).all()
         whoinformatin = User.query.filter_by(openid = session['openid']).first()
         for i in tell:
@@ -399,11 +413,20 @@ def decline():
             }
             requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))            
         db_session.delete(deleteorder)
+        if ans == "Fail":
+            if whoinformatin.credit > 10:
+                whoinformatin.credit = whoinformatin.credit - 10
+            else:
+                whoinformatin.credit = 0
+
     else:
         deleteorder = Join.query.filter_by(followid = deleteid, openid = session['openid']).first()
         whichorder = Order.query.filter_by(id = deleteid).first()
+        if whichorder.countis < 1:
+            ans = "Success"
         whoinformatin = User.query.filter_by(openid = session['openid']).first()
         whichorder.countis = whichorder.countis - 1
+        User.query.filter_by(openid = session['openid']).update({User.credit:User.credit - 10})
         senddata = {
             "touser":whichorder.openid,
             "template_id":"6tqxJR2dlL2H0qBI6_ktVmG6-jIua1Aa7ST6hDNCb-s",
@@ -442,15 +465,7 @@ def decline():
         requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))     
         db_session.delete(deleteorder)
     db_session.commit()
-    time1 = str(request.form['whenis'])
-    time2 = time.strptime(time1,'%Y-%m-%d %H:%M')
-    time3 = datetime.datetime(*time2[:5])
-    interval = time3 - datetime.datetime.now()
-    if interval.days == 0 and interval.seconds < 21600:
-        return "Fail"
-    else:
-        return "Success"
-
+    return ans
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
