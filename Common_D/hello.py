@@ -6,6 +6,9 @@ import requests
 from get_accesstoken import access_token
 import random
 from bs4 import BeautifulSoup
+import time
+import datetime
+
 
 
 app = Flask(__name__,static_url_path='/lk/static')
@@ -134,7 +137,12 @@ def changeinformation():
 def addtaxi():
     if 'openid' not in session:
         session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
-    neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],request.form['whenis'])
+    time1 = str(request.form['whenis'])
+    #time2 = time.strptime(time1,'%Y-%m-%dT%H:%M:%S')
+    time2 = time.strptime(time1[:16],'%Y-%m-%dT%H:%M')
+    time3 = datetime.datetime(*time2[:5])
+    restime = time3.strftime("%Y-%m-%d-%H:%M")
+    neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],restime)
     db_session.add(neworder)
     db_session.commit()
     return ""
@@ -341,6 +349,11 @@ def addhome(how):
     session['area'] = 2
     return render_template('addhome.html', Session = session,how = how)
 
+
+
+@webapp.route('/decline')
+def decline():
+    return ""
 
 
 app.register_blueprint(webapp)
