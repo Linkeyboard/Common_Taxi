@@ -250,7 +250,7 @@ def addfollow():
         }
         requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))
         whouser = User.query.filter_by(openid = session['openid']).first()
-                senddata = {
+        senddata = {
             "touser":tmporder.openid,
             "template_id":"lvRRnjCTdF0I3ztMsTbYBTFcxITUBfesVinks1Bzos0",
             "url":"https://www.baidu.com",
@@ -285,6 +285,7 @@ def addfollow():
                    }
             }
         }
+        requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))
         return "success"
     else:
         return "fail"
