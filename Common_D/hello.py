@@ -161,7 +161,7 @@ def showcommontaxi():
             data['id'] = i.id
             data['openid'] = i.openid
             datasend.append(data)
-    print('datasend',datasend)
+    #print('datasend',datasend)
     return render_template('showcommontaxi.html', Session = session, data = datasend)
 
 @webapp.route('/taxidetail/<tmpid>',methods=['POST','GET'])
@@ -213,10 +213,9 @@ def addfollow():
         db_session.commit()
         tmporder = Order.query.filter_by(id = request.form['followid']).first()
         tmpuser = User.query.filter_by(openid = tmporder.openid).first()
-        print(tmpuser,tmporder)
         senddata = {
             "touser":session['openid'],
-            "template_id":"1E-l9Wj7PClvKCkicTJ1F0yJKI60TNbrvk5QWjLfrtE",
+            "template_id":"IFw0JTmwCqTvWnFkZG5N2ZR_LGJOX_ZLVOR92bivaRA",
             "url":"https://www.baidu.com",
             "data":{
                 "first": {
@@ -249,8 +248,43 @@ def addfollow():
                    }
             }
         }
-        print('senddata',senddata)
         requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))
+        whouser = User.query.filter_by(openid = session['openid']).first()
+                senddata = {
+            "touser":tmporder.openid,
+            "template_id":"lvRRnjCTdF0I3ztMsTbYBTFcxITUBfesVinks1Bzos0",
+            "url":"https://www.baidu.com",
+            "data":{
+                "first": {
+                    "value":"同伴信息",
+                    "color":"#173177"
+                 },
+                "keyword1":{
+                    "value":whouser.name,
+                    "color":"#173177"
+                 },
+                "keyword2": {
+                    "value":whouser.wechatid,
+                    "color":"#173177"
+                   },
+                "keyword3": {
+                    "value":whouser.phone,
+                    "color":"#173177"
+                   },
+                "keyword4": {
+                    "value":tmporder.whenis,
+                    "color":"#173177"
+                   },
+                "keyword5": {
+                    "value":tmporder.fromwhere,
+                    "color":"#173177"
+                   },
+                "remark":{
+                    "value":"请按时到达集合地！",
+                    "color":"#173177"
+                   }
+            }
+        }
         return "success"
     else:
         return "fail"
@@ -259,7 +293,6 @@ def addfollow():
 def mytaxi():
     if 'openid' not in session:
         session['openid'] = 'oqK-bxCCAxRaEHslFrJ7_UGQ8JNM'
-    print(session['openid'])
     myorder = Order.query.filter_by(openid = session['openid']).all()
     data = {}
     datasend = []
@@ -276,13 +309,12 @@ def mytaxi():
             data['countis'] = i.countis
             data['id'] = i.id
             datasend.append(data)
-    print('datasend',datasend)
     return render_template('showcommontaxi.html', Session = session, data = datasend)
 
 
 @webapp.route('/myjoin')
 def myjoin():
-    print('openid',session['openid'])
+    #print('openid',session['openid'])
     tmpjoin = Join.query.filter_by(openid = session['openid']).all()
     data = {}
     datasend = []
