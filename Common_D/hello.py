@@ -175,6 +175,47 @@ def inserthome():
         return "Fail"
     restime = time3.strftime("%Y-%m-%d %H:%M")
     newhome = GOHOME(session['openid'] ,request.form['fromhome'],request.form['tohome'],request.form['typehome'],restime)
+    findhome = GOHOME.query.filter_by(tohome = request.form['tohome']).all()
+    for i in findhome:
+        finduser = User.query.filter_by(openid = i.openid).all()
+        senddata = {
+            "touser":finduser.openid,
+            "template_id":"lvRRnjCTdF0I3ztMsTbYBTFcxITUBfesVinks1Bzos0",
+            "data":{
+                "first": {
+                    "value":"提示：有顺路的小伙伴！",
+                    "color":"#173177"
+                 },
+                "keyword1":{
+                    "value":finduser.name,
+                    "color":"#173177"
+                 },
+                "keyword2": {
+                    "value":finduser.wechatid,
+                    "color":"#173177"
+                   },
+                "keyword3": {
+                    "value":finduser.phone,
+                    "color":"#173177"
+                   },
+                "keyword4": {
+                    "value":findhome.whenis,
+                    "color":"#173177"
+                   },
+                "keyword5": {
+                    "value":findhome.fromwhere,
+                    "color":"#173177"
+                   },
+                "remark":{
+                    "value":"及时联系，回家有伴！",
+                    "color":"#173177"
+                   }
+            }
+        }
+        requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))
+
+
+
     db_session.add(newhome)
     db_session.commit()
     return "True"
@@ -717,6 +758,44 @@ def samecity():
 
     print('data1',data1)
     return render_template('samecity.html', Session = session ,data1 = senddata1 ,data2 = senddata2)
+
+
+
+
+@webapp.route('/userdetail/<tmpid>',methods=['POST','GET'])
+def userdetail(tmpid):
+    tmphome = GOHOME.query.filter_by(homeid = tmpid).first()
+    who = Stu.query.filter_by(openid = tmphome.openid).first()
+    finduser = User.query.filter_by(openid = who.openid).first()
+    data={}
+    data['headimgurl'] = who.headimgurl
+    data['nickname'] = who.nickname
+    data['tohome'] = tmphome.tohome
+    data['fromhome'] = tmphome.fromhome
+    data['whenhome'] = tmphome.whenhome
+    data['homeid'] = tmphome.homeid
+    data['typehome'] = tmphome.typehome
+    data['openid'] = session['openid']
+    data['credit'] = finduser.credit
+    data['name'] = finduser.name
+    data['phone'] = finduser.phone
+    data['wechatid'] = finduser.wechatid
+    if data['typehome'] == "1":
+        data['typehome'] = "飞机"
+    elif data['typehome'] == "2":
+        data['typehome'] = "火车"
+    elif data['typehome'] == "3":
+        data['typehome'] = "轮船"
+    if data['credit'] >= 85:
+        data['credit'] = "优"
+    elif data['credit'] >=70:
+        data['credit'] = "良"
+    elif data['credit'] >= 60:
+        data['credit'] = "一般"
+    else:
+        data['credit'] = '差'
+    return render_template('userdetail.html',Session = session, data = data)
+
 
 
 

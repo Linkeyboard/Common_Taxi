@@ -1,24 +1,24 @@
 {% extends 'base.html' %} {% block body %}
 <div class="weui-tab">
   <div class="weui-navbar">
-    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
+    <a class="weui-navbar__item weui-bar__item--on" href="#tab2">
       同一目的地
     </a>
-    <a class="weui-navbar__item" href="#tab2">
+    <a class="weui-navbar__item" href="#tab1">
       同一省份
     </a>
   </div>
   <div class="weui-tab__bd">
     <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
 
-
+ <div class="weui-panel__hd">查看用户详细信息</div>
   <div class="weui-panel__bd">
     {% for i in data1 %}
-    <a href="{{ url_for('webapp.mytaxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    <a href="{{ url_for('webapp.userdetail',tmpid = i['homeid']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
       <div class="weui-media-box__hd">
         <img class="weui-media-box__thumb" src={{ i['headimgurl'] }}>
       </div>
-      <p style="display: none" id="tmpid">{{ i['id'] }}</p>
+
       <div class="weui-media-box__bd">
         <h4 class="weui-media-box__desc" id="nickname">{{ i['nickname']  }}</h4>
         <p class="weui-media-box__desc">目的地: {{ i['tohome'] }}</p>
@@ -40,11 +40,10 @@
 
   <div class="weui-panel__bd">
     {% for i in data2 %}
-    <a href="{{ url_for('webapp.mytaxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    <a href="{{ url_for('webapp.userdetail',tmpid = i['homeid']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
       <div class="weui-media-box__hd">
         <img class="weui-media-box__thumb" src={{ i['headimgurl'] }}>
       </div>
-      <p style="display: none" id="tmpid">{{ i['id'] }}</p>
       <div class="weui-media-box__bd">
         <h4 class="weui-media-box__desc" id="nickname">{{ i['nickname']  }}</h4>
         <p class="weui-media-box__desc">目的地: {{ i['tohome'] }}</p>

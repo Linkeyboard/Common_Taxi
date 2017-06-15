@@ -1,20 +1,53 @@
 ﻿{% extends 'base.html' %} {% block body %}
-<div class="weui-tab">
-  <div class="weui-navbar">
-    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
-      同一目的地
-    </a>
-    <a class="weui-navbar__item" href="#tab2">
-      同一省份
-    </a>
+<div>
+    <img src={{ (information['headimgurl']|safe) }}   style="border: #000 solid 20%;  
+                display: block;  
+                margin: 10% auto;
+                width:35%; 
+                height:35%;  
+                border-radius: 100%;  "></img>
+</div>
+<div style="text-align:center;margin:0 auto;font-size: 130%">
+    <p>{{ (information['nickname']|safe) }}</p>
+</div>
+<div class="weui-form-preview">
+  <div class="weui-form-preview__hd">
+    <label class="weui-form-preview__label">发起人</label>
+    <em class="weui-form-preview__value">{{ data['nickname'] }}</em>
   </div>
-  <div class="weui-tab__bd">
-    <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-      <h1>页面一</h1>
+  <div class="weui-form-preview__bd">
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">出发地</label>
+      <span class="weui-form-preview__value">{{ data['fromwhere'] }}</span>
     </div>
-    <div id="tab2" class="weui-tab__bd-item">
-      <h1>页面二</h1>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">目的地</label>
+      <span class="weui-form-preview__value">{{ data['towhere'] }}</span>
     </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">时间</label>
+      <span class="weui-form-preview__value">{{ data['whenis'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">车内人数</label>
+    <span class="weui-form-preview__value">{{ data['countis'] }}人</span>
+    </div>
+    <div class="weui-form-preview__item">
+    <label class="weui-form-preview__label">预计花费</label>
+    <span class="weui-form-preview__value" id="oldcost"></span>
+    </div>
+        <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">节省花费</label>
+    <span class="weui-form-preview__value" id="save"></span>
+    </div>
+    <div class="weui-form-preview__item">
+    <label class="weui-form-preview__label">信用等级</label>
+    <span class="weui-form-preview__value">{{ data['credit'] }}</span>
+    </div>
+  </div>
+  <div class="weui-form-preview__ft">
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="add()">加入</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/showcommontaxi">返回</a>
   </div>
 </div>
 {% endblock %}

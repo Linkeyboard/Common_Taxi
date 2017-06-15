@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block body %}
+<div>
+    <img src={{ data['headimgurl'] }}   style="border: #000 solid 20%;  
+                display: block;  
+                margin: 10% auto;
+                width:35%; 
+                height:35%;  
+                border-radius: 100%;  "></img>
+</div>
+<div style="text-align:center;margin:0 auto;font-size: 130%">
+    <p>{{ data['nickname'] }}</p>
+</div>
+<div class="weui-form-preview">
+  <div class="weui-form-preview__hd">
+    <label class="weui-form-preview__label">姓名</label>
+    <em class="weui-form-preview__value">{{ data['name'] }}</em>
+  </div>
+  <div class="weui-form-preview__bd">
+        <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">微信号</label>
+      <span class="weui-form-preview__value">{{ data['wechatid'] }}</span>
+    </div>
+        <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">电话</label>
+      <span class="weui-form-preview__value">{{ data['phone'] }}</span>
+    </div>
+        <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">交通类型</label>
+      <span class="weui-form-preview__value">{{ data['typehome'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">出发地</label>
+      <span class="weui-form-preview__value">{{ data['fromhome'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">目的地</label>
+      <span class="weui-form-preview__value">{{ data['tohome'] }}</span>
+    </div>
+    <div class="weui-form-preview__item">
+      <label class="weui-form-preview__label">时间</label>
+      <span class="weui-form-preview__value">{{ data['whenhome'] }}</span>
+    </div>
+    
+    <div class="weui-form-preview__item">
+    <label class="weui-form-preview__label">信用等级</label>
+    <span class="weui-form-preview__value">{{ data['credit'] }}</span>
+    </div>
+  </div>
+  <div class="weui-form-preview__ft">
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="">加入</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/samecity">返回</a>
+  </div>
+</div>
+{% endblock %}
