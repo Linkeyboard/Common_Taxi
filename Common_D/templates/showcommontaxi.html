@@ -8,7 +8,9 @@
   {% endif %}
   <div class="weui-panel__bd">
     {% for i in data %}
-    {% if i['openid'] != Session['openid'] %}
+    {% if select == "2" %}
+    <a href="{{ url_for('webapp.comment',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
+    {% elif i['openid'] != Session['openid'] %}
     <a href="{{ url_for('webapp.taxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">
     {% else %}
     <a href="{{ url_for('webapp.mytaxidetail',tmpid = i['id']) }}" onclick="" class="weui-media-box weui-media-box_appmsg" style="text-decoration:none;">

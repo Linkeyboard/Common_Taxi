@@ -37,19 +37,35 @@
   </div>
   <div class="weui-form-preview__bd">
   <div class="weui-form-preview__item">
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">标题标题</label>
+    {% if ll >=1 %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[0] }}</label>
+    {% elif %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
+    {% endif %}
   <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">标题标题</label>
+    {% if ll >=2 %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[1] }}</label>
+    {% elif %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
+    {% endif %}
   <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">标题标题</label>
+        {% if ll >=3 %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[2] }}</label>
+    {% elif %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
+    {% endif %}
   <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">标题标题</label>
+        {% if ll >=4 %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[3] }}</label>
+    {% elif %}
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
+    {% endif %}
   <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
   </div>
   </div>
