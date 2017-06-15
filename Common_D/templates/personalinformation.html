@@ -93,18 +93,23 @@
         {% endif %}
     }
     function change(){
-        $.post("/lk/changeinformation",
-        {
-            stuname:$("#stuname").val(),
-            wechatid:$("#wechatid").val(),
-            phone:$("#phone").val(),
-            sex:$('input:radio:checked').val(),
-        },
-        function(data, status){
-            if(data==""){
-                window.location.href="/lk/my"
-            }
-        });
+        if(!$("#stuname").val() || !$("#wechatid").val() || !$("#phone").val() || !$('input:radio:checked').val()){
+            $.toast("请填写所有字段","cancel");
+        }else{
+          $.post("/lk/changeinformation",
+          {
+              stuname:$("#stuname").val(),
+              wechatid:$("#wechatid").val(),
+              phone:$("#phone").val(),
+              sex:$('input:radio:checked').val(),
+          },
+          function(data, status){
+              if(data==""){
+                  window.location.href="/lk/my"
+              }
+          });
+        }
+
     }
     function cancel(){
 	window.location.href="/lk/my"

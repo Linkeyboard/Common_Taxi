@@ -39,7 +39,7 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label for="name" class="weui-label">出发地</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" id="start" type="text" value="山东省 威海市 环翠区">
+          <input class="weui-input" id="start" type="text" value="山东省 威海市">
         </div>
       </div>
       <div class="weui-cell">
@@ -73,32 +73,38 @@
         console.log($("#start").val());
         console.log($("#end").val());
         console.log($("#time").val());
-        $.post('/lk/inserthome',
-        {
-          fromhome:$("#start").val(),
-          tohome:$("#end").val(),
-          whenhome:$("#time").val(),
-          typehome:{{how}},
-        },
-        function(data,status){
-            if(data=="Fail"){
-                $.toast("活动时间小于当前时间","cancel");
-            }else{
-                $.toast("操作成功");
-            }
-        });
+        if( !$("#start").val() || !$("#end").val() || !$("#time").val() == null){
+            $.toast("请填写所有字段","cancel");
+        }else{
+          $.post('/lk/inserthome',
+          {
+            fromhome:$("#start").val(),
+            tohome:$("#end").val(),
+            whenhome:$("#time").val(),
+            typehome:{{how}},
+          },
+          function(data,status){
+              if(data=="Fail"){
+                  $.toast("活动时间小于当前时间","cancel");
+              }else{
+                  $.toast("操作成功");
+              }
+          });
+        }
     }
 </script>
 
     <script>
       $("#start").cityPicker({
         title: "选择出发地",
+        showDistrict: false,
         onChange: function (picker, values, displayValues) {
           console.log(values, displayValues);
         }
       });
       $("#end").cityPicker({
-        title: "选择目的地"
+        title: "选择目的地",
+        showDistrict: false,
       });
       $("#home-city").cityPicker({
         title: "选择目的地",

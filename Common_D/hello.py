@@ -655,6 +655,69 @@ def commentperson():
 
 
 
+@webapp.route('/samecity')
+def samecity():
+    session['area'] = 3
+    mygohome = GOHOME.query.filter_by(openid = session['openid']).all()
+    senddata1 = []
+    data1 = {}
+    for i in mygohome:
+        data1 = {}
+        data1['openid'] = session['openid']
+        data1['tohome'] = i.tohome
+        data1['typehome'] = i.typehome
+        data1['homeid'] = i.homeid
+        findme = Stu.query.filter_by(openid = session['openid']).first()
+        data1['nickname'] = findme.nickname
+        data1['headimgurl'] = findme.headimgurl
+        data1['whenhome'] = i.whenhome
+        senddata1.append(data1)
+        otherhome = GOHOME.query.filter(GOHOME.tohome.like(i.tohome[:3]+"%")).all()
+        for j in otherhome:
+            if j.openid != session['openid']:
+                data1 = {}
+                data1['openid'] = j.openid
+                data1['typehome'] = j.typehome
+                data1['fromhome'] = j.fromhome
+                data1['tohome'] = j.tohome
+                data1['homeid'] = j.homeid
+                data1['whenhome'] = j.whenhome
+                findstu = Stu.query.filter_by(openid = j.openid).first()
+                data1['nickname'] = findstu.nickname
+                data1['headimgurl'] = findstu.headimgurl
+                senddata1.append(data1)
+
+    senddata2 = []
+    data2 = {}
+    for i in mygohome:
+        data2 = {}
+        data2['openid'] = session['openid']
+        data2['tohome'] = i.tohome
+        data2['typehome'] = i.typehome
+        data2['homeid'] = i.homeid
+        data2['whenhome'] = i.whenhome
+        findme = Stu.query.filter_by(openid = session['openid']).first()
+        data2['nickname'] = findme.nickname
+        data2['headimgurl'] = findme.headimgurl
+        senddata2.append(data2)
+        otherhome = GOHOME.query.filter_by(tohome = i.tohome).all()
+        for j in otherhome:
+            if j.openid != session['openid']:
+                data2 = {}
+                data2['openid'] = j.openid
+                data2['typehome'] = j.typehome
+                data2['fromhome'] = j.fromhome
+                data2['tohome'] = j.tohome
+                data2['whenhome'] = j.whenhome
+                data2['homeid'] = j.homeid
+                findstu = Stu.query.filter_by(openid = j.openid).first()
+                data2['nickname'] = findstu.nickname
+                data2['headimgurl'] = findstu.headimgurl
+                senddata2.append(data2)
+
+    print('data1',data1)
+    return render_template('samecity.html', Session = session ,data1 = senddata1 ,data2 = senddata2)
+
 
 
 app.register_blueprint(webapp)
