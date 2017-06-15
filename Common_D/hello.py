@@ -162,7 +162,7 @@ def addtaxi():
     db_session.commit()
     return "True"
 
-inserthome
+
 
 @webapp.route('/inserthome',methods=['POST'])
 def inserthome():

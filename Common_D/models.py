@@ -101,7 +101,7 @@ class GOHOME(Base):
         self.tohome = tohome
         self.typehome = typehome
         self.whenhome = whenhome
-        
+        self.counthome = counthome       
 
     def __repr__(self):
         return '<openid %r fromhome %r tohome %r>' % (self.openid,self.fromhome,self.tohome)
