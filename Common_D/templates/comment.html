@@ -70,11 +70,16 @@
   </div>
   </div>
   <div class="weui-form-preview__ft">
+    {% if commentis == 0 %}
     <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="comment()">提交</a>
+    {% else %}
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="">已评价</a>
+    {% endif %}
     <a type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="/lk/my">返回</a>
   </div>
 </div>
 <script>
+console.log({{ commentis }});
 $("input").picker({
   title: "请选择您对该用户的评价",
   cols: [
@@ -97,7 +102,7 @@ $("input").picker({
           tmpid:{{tmptmpid}},
       },
       function(data, status){
-
+          $.toast('评价成功')
       });
   }
 </script>

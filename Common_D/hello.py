@@ -1,6 +1,6 @@
 from flask import Flask,render_template,url_for,session,request,session,Blueprint,redirect
 from database import db_session,init_db
-from models import User,Stu,Order,Join
+from models import User,Stu,Order,Join,GOHOME
 import json
 import requests
 from get_accesstoken import access_token
@@ -161,6 +161,24 @@ def addtaxi():
     db_session.add(neworder)
     db_session.commit()
     return "True"
+
+inserthome
+
+@webapp.route('/inserthome',methods=['POST'])
+def inserthome():
+    time1 = str(request.form['whenhome'])
+    #time2 = time.strptime(time1,'%Y-%m-%dT%H:%M:%S')
+    time2 = time.strptime(time1[:16],'%Y-%m-%dT%H:%M')
+    time3 = datetime.datetime(*time2[:5])
+    interval = time3 - datetime.datetime.now()
+    if interval.days < 0 or interval.seconds < 0:
+        return "Fail"
+    restime = time3.strftime("%Y-%m-%d %H:%M")
+    newhome = GOHOME(session['openid'] ,request.form['fromhome'],request.form['tohome'],request.form['typehome'],restime)
+    db_session.add(newhome)
+    db_session.commit()
+    return "True"
+
 
 
 
@@ -523,7 +541,7 @@ def comment(tmpid):
         data['name'] = finduser.name
         senddata.append(data)
     
-    return render_template('comment.html', Session = session , data = senddata , ll = len(senddata), tmptmpid = tmpid)
+    return render_template('comment.html', Session = session , data = senddata , ll = len(senddata), tmptmpid = tmpid, commentis = findorder.commentis)
 
 
 
@@ -548,7 +566,7 @@ def commentperson():
         Ownuser.credit = Ownuser.credit - 30
     elif commenttmp[0] == "未支付费用":
         Ownuser.credit = Ownuser.credit - 90
-    
+    findorder.commentis = 1
     db_session.commit()
 
     senddata = {

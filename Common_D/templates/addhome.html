@@ -70,8 +70,23 @@
 <script src="{{ url_for('static', filename='js/city-picker.js') }}"></script>
 <script>
     function add(){
+        console.log($("#start").val());
         console.log($("#end").val());
         console.log($("#time").val());
+        $.post('/lk/inserthome',
+        {
+          fromhome:$("#start").val(),
+          tohome:$("#end").val(),
+          whenhome:$("#time").val(),
+          typehome:{{how}},
+        },
+        function(data,status){
+            if(data=="Fail"){
+                $.toast("活动时间小于当前时间","cancel");
+            }else{
+                $.toast("操作成功");
+            }
+        });
     }
 </script>
 
