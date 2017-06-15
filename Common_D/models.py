@@ -18,6 +18,7 @@ class User(Base):
         self.stuid = stuid
         self.wechatid = wechatid
         self.sex = sex
+        self.credit = credit 
 
     def __repr__(self):
         return '<id %r name %r>' % (self.openid,self.name)

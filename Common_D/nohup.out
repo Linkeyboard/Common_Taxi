@@ -1,0 +1,198 @@
+ * Running on http://0.0.0.0:8008/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 233-233-618
+192.168.149.1 - - [14/Jun/2017 16:52:11] "GET /lk?code=041NZUkt1hU5ra0AsAkt14MXkt1NZUkJ&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 16:52:12] "GET /lk/?code=041NZUkt1hU5ra0AsAkt14MXkt1NZUkJ&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 16:52:13] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:52:16] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:52:17] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:52:20] "GET /lk/mytaxidetail/7 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:52:25] "POST /lk/decline HTTP/1.0" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/lk/Common_Taxi/Common_D/hello.py", line 445, in decline
+    time2 = time.strptime(time1,'%Y-%m-%d %H:%M')
+  File "/usr/lib/python3.4/_strptime.py", line 494, in _strptime_time
+    tt = _strptime(data_string, format)[0]
+  File "/usr/lib/python3.4/_strptime.py", line 337, in _strptime
+    (data_string, format))
+ValueError: time data '2017-06-09-15:30' does not match format '%Y-%m-%d %H:%M'
+192.168.149.1 - - [14/Jun/2017 16:53:07] "POST /lk?signature=5c000fb097360fa719a95fb1066fabe7a429b113&timestamp=1497430482&nonce=1574635598&openid=oqK-bxIJjW256vKaU9wABr-cTDn4 HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 16:53:52] "GET /lk?code=011EdOrK008Y252t3usK0RdCrK0EdOrV&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 16:53:52] "GET /lk?code=0310purc1AiMas08XRuc1hvkrc10puru&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 16:53:58] "GET /lk/?code=011EdOrK008Y252t3usK0RdCrK0EdOrV&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 16:53:59] "GET /lk/?code=0310purc1AiMas08XRuc1hvkrc10puru&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 16:53:59] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:53:59] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:54:25] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:55:43] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:55:45] "GET /lk/mytaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:55:48] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:55:50] "GET /lk/myjoin HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:59:43] "GET /lk?code=011mgnvD0eX1hg2l1rvD0dq4vD0mgnvT&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 16:59:44] "GET /lk/?code=011mgnvD0eX1hg2l1rvD0dq4vD0mgnvT&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 16:59:46] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:59:48] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:59:49] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:59:50] "GET /lk/style=%22border: HTTP/1.0" 404 -
+192.168.149.1 - - [14/Jun/2017 16:59:50] "GET /lk/style=%22border: HTTP/1.0" 404 -
+192.168.149.1 - - [14/Jun/2017 16:59:51] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 16:59:53] "GET /lk/my HTTP/1.0" 200 -
+ * Running on http://0.0.0.0:8008/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 233-233-618
+192.168.149.1 - - [14/Jun/2017 17:36:01] "GET /lk?code=071eEeT12LN9a11JpNT12rAsT12eEeT1&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 17:36:07] "GET /lk/?code=071eEeT12LN9a11JpNT12rAsT12eEeT1&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 17:36:07] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:36:17] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:36:35] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:41] "GET /lk?code=001J1j4G0wQ18h2eoI3G0xj14G0J1j4P&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 17:55:42] "GET /lk/?code=001J1j4G0wQ18h2eoI3G0xj14G0J1j4P&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 17:55:42] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/destination.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/car.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/tmp1.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/plane.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/ship3.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:47] "GET /lk/static/images/train2.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:52] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:55:55] "GET /lk/personalinformation HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:16] "POST /lk/changeinformation HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:17] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:24] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:26] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:31] "GET /lk?code=0313tIlJ023gQj2h4eoJ0NAIlJ03tIlt&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 17:56:32] "GET /lk/?code=0313tIlJ023gQj2h4eoJ0NAIlJ03tIlt&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 17:56:32] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:34] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:56:37] "GET /lk/newcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:57:18] "POST /lk/addtaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:57:19] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:57:24] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:57:26] "GET /lk/taxidetail/4 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:00] "POST /lk/addfollow HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:00] "POST /lk?signature=697f1695e7a58d18ad7af0d4373913baacd07052&timestamp=1497434374&nonce=1722734785&openid=oqK-bxCwvb7vw5U10fkYOFmmpzpk HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:58:00] "POST /lk?signature=72f95878aed54a3f2b1353d3342de920d71a61f8&timestamp=1497434375&nonce=210754170&openid=oqK-bxCCAxRaEHslFrJ7_UGQ8JNM HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:58:35] "POST /lk?signature=feb374b1ab1f6c5ce35f6654eed7c105fc6e9c91&timestamp=1497434410&nonce=127654435&openid=oqK-bxCCAxRaEHslFrJ7_UGQ8JNM HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:58:42] "GET /lk?code=061C5uDc1ts8ns07ZiBc1K0rDc1C5uD-&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 17:58:48] "GET /lk/?code=061C5uDc1ts8ns07ZiBc1K0rDc1C5uD-&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 17:58:49] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:51] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:54] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:56] "GET /lk/mytaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:58:59] "GET /lk/mytaxidetail/4 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:03] "POST /lk/decline HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:03] "POST /lk?signature=4a22174b7ed0017eae9aa4f306ff5aac22288fe4&timestamp=1497434437&nonce=522365932&openid=oqK-bxCCAxRaEHslFrJ7_UGQ8JNM HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:59:03] "POST /lk?signature=adbbbb790c87957095ae15db960a208ee353c614&timestamp=1497434438&nonce=2106997302&openid=oqK-bxCwvb7vw5U10fkYOFmmpzpk HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:59:31] "POST /lk?signature=dbc6100549ac40039d77ef559907e17863d7d1c7&timestamp=1497434465&nonce=379530878&openid=oqK-bxCwvb7vw5U10fkYOFmmpzpk HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:59:39] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:44] "GET /lk/taxidetail/3 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:48] "POST /lk/addfollow HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:48] "POST /lk?signature=0fe627258f86de5970edda43df275b7eca6d2af1&timestamp=1497434482&nonce=1118806773&openid=oqK-bxCCAxRaEHslFrJ7_UGQ8JNM HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:59:48] "POST /lk?signature=bef610061acc0c52fd42d9db020d54bac05632f1&timestamp=1497434482&nonce=1873622683&openid=oqK-bxIJjW256vKaU9wABr-cTDn4 HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 17:59:52] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:53] "GET /lk/taxidetail/3 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:56] "POST /lk/decline HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 17:59:56] "POST /lk?signature=f0e0a4ae04c6109e7ee37676dd35598fe211ccd1&timestamp=1497434491&nonce=1042186966&openid=oqK-bxIJjW256vKaU9wABr-cTDn4 HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 18:00:04] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:00:06] "GET /lk/taxidetail/3 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:00:09] "POST /lk/addfollow HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:00:09] "POST /lk?signature=a7ebca4b42b141662acb64d9d4e81d59d8977f76&timestamp=1497434504&nonce=1811993662&openid=oqK-bxCCAxRaEHslFrJ7_UGQ8JNM HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 18:00:09] "POST /lk?signature=98c3dd16a67f88b082e6f867abc49749f9442f64&timestamp=1497434504&nonce=1790853400&openid=oqK-bxIJjW256vKaU9wABr-cTDn4 HTTP/1.0" 405 -
+192.168.149.1 - - [14/Jun/2017 18:35:11] "GET /lk?code=0813S3Ib0fNCjw1bGCIb0FsgIb03S3IV&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 18:35:12] "GET /lk/?code=0813S3Ib0fNCjw1bGCIb0FsgIb03S3IV&state=66 HTTP/1.0" 302 -
+192.168.149.1 - - [14/Jun/2017 18:35:13] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:35:15] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:35:17] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:35:18] "GET /lk/newcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:36:33] "POST /lk/addtaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:36:33] "GET /lk/selector HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:36:35] "GET /lk/showcommontaxi HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:36:37] "GET /lk/mytaxidetail/4 HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:40:13] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:40:13] "GET /lk/my HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 18:41:37] "GET /lk/mapserch HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:22:34] "GET /lk?code=0114r5E32aYGKK06V0C32Yd0E324r5EP&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 21:22:40] "GET /lk/?code=0114r5E32aYGKK06V0C32Yd0E324r5EP&state=66 HTTP/1.0" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/lk/Common_Taxi/Common_D/hello.py", line 35, in index
+    session['nickname'] = information.json()['nickname']
+KeyError: 'nickname'
+192.168.149.1 - - [14/Jun/2017 21:22:40] "GET /lk/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:22:40] "GET /lk/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:22:40] "GET /lk/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:22:41] "GET /lk/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:22:41] "GET /lk/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:28:37] "GET /lk?code=051C2LE01HvSn12ENgD01tpHE01C2LEm&state=66 HTTP/1.0" 301 -
+192.168.149.1 - - [14/Jun/2017 21:28:38] "GET /lk/?code=051C2LE01HvSn12ENgD01tpHE01C2LEm&state=66 HTTP/1.0" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.4/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/lk/Common_Taxi/Common_D/hello.py", line 35, in index
+    session['nickname'] = information.json()['nickname']
+KeyError: 'nickname'
+192.168.149.1 - - [14/Jun/2017 21:28:38] "GET /lk/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:28:38] "GET /lk/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:28:38] "GET /lk/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:28:39] "GET /lk/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.0" 200 -
+192.168.149.1 - - [14/Jun/2017 21:28:39] "GET /lk/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.0" 200 -
