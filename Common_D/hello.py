@@ -475,7 +475,7 @@ def comment(tmpid):
     findjoin = Join.query.filter_by(followid = tmpid).all()
     senddata = []
     for i in findjoin:
-        finduser = User.query.filter_by(openid = i.openid)
+        finduser = User.query.filter_by(openid = i.openid).first()
         senddata.append(finduser.name)
     return render_template('comment.html', Session = session , data = senddata , ll = len(senddata))
 
