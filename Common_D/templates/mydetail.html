@@ -58,7 +58,7 @@
     //driving.search("威海站", "威海北站");   //驾车查询
 	function yyy(rs){           
 		//alert("打车总费用为："+rs.taxiFare.day.totalFare+"元");     //计算出白天的打车费用的总价
-        var cost = rs.taxiFare.day.totalFare/{{ data['countis']+1 }}
+        var cost = rs.taxiFare.day.totalFare/{{ data['countis'] }}
         $('#oldcost').text(cost.toFixed(2)+"元");
         $('#save').text((rs.taxiFare.day.totalFare-cost).toFixed(2)+"元");
 	}
