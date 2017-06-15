@@ -118,6 +118,18 @@ def personalinformation():
         session['wechatid'] = user.wechatid
         session['sex'] = user.sex
         session['phone'] = user.phone
+        session['credit'] = int(user.credit)
+    else:
+        session['credit'] = 100
+
+    if session['credit'] >= 85:
+        session['credit'] = "优"
+    elif session['credit'] >=70:
+        session['credit'] = "良"
+    elif session['credit'] >= 60:
+        session['credit'] = "一般"
+    else:
+        session['credit'] = '差'
     information = requests.get("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+access_token+"&openid="+session['openid']+"&lang=zh_CN")
     return render_template('personalinformation.html', Session = session , has_logged = has_logged, information = information.json())
 
@@ -196,6 +208,14 @@ def taxidetail(tmpid):
     data['openid'] = who.openid
     data['my'] = "0"
     data['credit'] = finduser.credit
+    if data['credit'] >= 85:
+        data['credit'] = "优"
+    elif data['credit'] >=70:
+        data['credit'] = "良"
+    elif data['credit'] >= 60:
+        data['credit'] = "一般"
+    else:
+        data['credit'] = '差'
     if Join.query.filter_by(followid = tmpid,openid = session['openid']).first():
         return render_template('mydetail.html',Session = session, data = data)
     else:
@@ -218,6 +238,14 @@ def mytaxidetail(tmpid):
     data['openid'] = session['openid']
     data['my'] = "1"
     data['credit'] = finduser.credit
+    if data['credit'] >= 85:
+        data['credit'] = "优"
+    elif data['credit'] >=70:
+        data['credit'] = "良"
+    elif data['credit'] >= 60:
+        data['credit'] = "一般"
+    else:
+        data['credit'] = '差'
     return render_template('mydetail.html',Session = session, data = data)
 
 # @webapp.route('/showdetail')

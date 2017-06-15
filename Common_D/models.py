@@ -50,14 +50,15 @@ class Order(Base):
     towhere = Column(String(200))
     whenis = Column(String(200))
     countis = Column(Integer)
+    commentis = Column(Integer)
 
-    def __init__(self,openid=None,fromwhere="哈尔滨工业大学（威海）", towhere = None, whenis = None, countis = 0):
+    def __init__(self,openid=None,fromwhere="哈尔滨工业大学（威海）", towhere = None, whenis = None, countis = 0,commentis = 0):
         self.openid = openid
         self.fromwhere = fromwhere
         self.towhere = towhere
         self.whenis = whenis
         self.countis = countis
-        
+        self.commentis = commentis
 
 
     def __repr__(self):
