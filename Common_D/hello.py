@@ -189,6 +189,7 @@ def taxidetail(tmpid):
     data['my'] = "0"
     data['credit'] = finduser.credit
     if Join.query.filter_by(followid = tmpid,openid = session['openid']).first():
+        data['countis'] = data['countis'] - 1
         return render_template('mydetail.html',Session = session, data = data)
     else:
         return render_template('detail.html',Session = session, data = data)
@@ -205,7 +206,7 @@ def mytaxidetail(tmpid):
     data['towhere'] = findorder.towhere
     data['fromwhere'] = findorder.fromwhere
     data['whenis'] = findorder.whenis
-    data['countis'] = findorder.countis + 1
+    data['countis'] = findorder.countis
     data['id'] = findorder.id
     data['openid'] = session['openid']
     data['my'] = "1"
