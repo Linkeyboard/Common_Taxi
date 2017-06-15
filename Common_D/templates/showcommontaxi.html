@@ -1,7 +1,11 @@
 {% extends 'base.html' %} {% block body %}
 
 <div class="weui-panel weui-panel_access">
+  {% if select == "1" %}
   <div class="weui-panel__hd">查看拼车活动(点击查看详细信息)</div>
+  {% else %}
+   <div class="weui-panel__hd">评价拼车活动(点击进行用户评价)</div>
+  {% endif %}
   <div class="weui-panel__bd">
     {% for i in data %}
     {% if i['openid'] != Session['openid'] %}
@@ -29,17 +33,24 @@
   </div>
 </div>
 <script>
+console.log({{ select }});
   function showshow(dom){
     var tmpid = $(dom).find("p").html();
-    $.get(
-      '/lk/taxidetail',
-      {
-          tmpid:tmpid
-      },
-      function(data,status){
+    if({{ select }} == 1){
+      //   $.get(
+      //   '/lk/taxidetail',
+      //   {
+      //       tmpid:tmpid
+      //   },
+      //   function(data,status){
 
-      }
-    );
+      //   }
+      // );
+      window.location.href = "/lk/my"
+    }else{
+        window.location.href = "/lk/comment"
+    }
+
   }
 </script>
 <br><br><br><br>

@@ -170,7 +170,7 @@ def showcommontaxi():
             data['openid'] = i.openid
             datasend.append(data)
     #print('datasend',datasend)
-    return render_template('showcommontaxi.html', Session = session, data = datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend , select = "1")
 
 @webapp.route('/taxidetail/<tmpid>',methods=['POST','GET'])
 def taxidetail(tmpid):
@@ -322,9 +322,9 @@ def mytaxi():
             data['fromwhere'] = i.fromwhere
             data['whenis'] = i.whenis
             data['countis'] = i.countis
-            data['id'] = i.id
+            data['id'] = i.id  
             datasend.append(data)
-    return render_template('showcommontaxi.html', Session = session, data = datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend, select = "1")
 
 
 @webapp.route('/myjoin')
@@ -342,12 +342,13 @@ def myjoin():
             data['whenis'] = tmporder.whenis
             data['countis'] = tmporder.countis
             data['id'] = tmporder.id
+            data['selector'] = "2"
             tmpstu = Stu.query.filter_by(openid = tmporder.openid).first()
             if tmpstu:
                 data['headimgurl'] = tmpstu.headimgurl
                 data['nickname'] = tmpstu.nickname
             datasend.append(data)
-    return render_template('showcommontaxi.html', Session = session, data = datasend)
+    return render_template('showcommontaxi.html', Session = session, data = datasend, select = "2")
 
 
 @webapp.route('/addhome/<how>')
@@ -466,6 +467,18 @@ def decline():
         db_session.delete(deleteorder)
     db_session.commit()
     return ans
+
+
+@webapp.route('/comment')
+def comment():
+    session['area'] = 3
+    return render_template('comment.html', Session = session)
+
+
+
+
+
+
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
