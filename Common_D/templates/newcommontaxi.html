@@ -61,8 +61,10 @@
             whenis:$("#time").val(),
         },
         function(data, status){
-            if(data==""){
-                window.location.href="/lk/selector"
+            if(data=="Fail"){
+                $.toast("活动时间小于当前时间","cancel");
+            }else{
+                $.toast("操作成功");
             }
         });
   }

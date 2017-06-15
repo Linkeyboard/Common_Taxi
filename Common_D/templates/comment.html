@@ -38,40 +38,40 @@
   <div class="weui-form-preview__bd">
   <div class="weui-form-preview__item">
     {% if ll >=1 %}
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[0] }}</label>
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[0]['name'] }}</label>
     {% else %}
     <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
     {% endif %}
-  <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
+  <input class="weui-input" id="picker1" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
     {% if ll >=2 %}
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[1] }}</label>
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[1]['name'] }}</label>
     {% else %}
     <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
     {% endif %}
-  <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
+  <input class="weui-input" id="picker2" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
         {% if ll >=3 %}
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[2] }}</label>
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[2]['name'] }}</label>
     {% else %}
     <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
     {% endif %}
-  <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
+  <input class="weui-input" id="picker3" style="width: 50%" placeholder="请选择"></input>
   </div>
   <div class="weui-form-preview__item">
         {% if ll >=4 %}
-    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[3] }}</label>
+    <label class="weui-form-preview__label" style="white-space:nowrap;float:left">{{ data[3]['name'] }}</label>
     {% else %}
     <label class="weui-form-preview__label" style="white-space:nowrap;float:left">用户未参加</label>
     {% endif %}
-  <input class="weui-input" id="picker" style="width: 50%" placeholder="请选择"></input>
+  <input class="weui-input" id="picker4" style="width: 50%" placeholder="请选择"></input>
   </div>
   </div>
   <div class="weui-form-preview__ft">
-    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">辅助操作</a>
-    <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</button>
+    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="comment()">提交</a>
+    <a type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="/lk/my">返回</a>
   </div>
 </div>
 <script>
@@ -85,6 +85,21 @@ $("input").picker({
   ]
 });
 </script>
+<script>
+  function comment(){
+    $.post('/lk/commentperson',
+      {
+          peoplecount:{{ ll }},
+          comment1:$("#picker1").val(),
+          comment2:$("#picker2").val(),
+          comment3:$("#picker3").val(),
+          comment4:$("#picker4").val(),
+          tmpid:{{tmptmpid}},
+      },
+      function(data, status){
 
+      });
+  }
+</script>
  </body>
 </html>

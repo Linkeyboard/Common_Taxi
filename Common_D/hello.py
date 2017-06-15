@@ -141,17 +141,20 @@ def addtaxi():
     #time2 = time.strptime(time1,'%Y-%m-%dT%H:%M:%S')
     time2 = time.strptime(time1[:16],'%Y-%m-%dT%H:%M')
     time3 = datetime.datetime(*time2[:5])
+    interval = time3 - datetime.datetime.now()
+    if interval.days < 0 or interval.seconds < 0:
+        return "Fail"
     restime = time3.strftime("%Y-%m-%d %H:%M")
     neworder = Order(session['openid'] ,request.form['fromwhere'],request.form['towhere'],restime)
     db_session.add(neworder)
     db_session.commit()
-    return ""
+    return "True"
 
 
 
 @webapp.route('/showcommontaxi')
 def showcommontaxi():
-    orderlist = Order.query.filter(Order.countis < 5).all()
+    orderlist = Order.query.filter(Order.countis < 4).all()
     #print('orderlist',orderlist)
     data = {}
     datasend = []
@@ -168,7 +171,12 @@ def showcommontaxi():
             data['countis'] = i.countis
             data['id'] = i.id
             data['openid'] = i.openid
-            datasend.append(data)
+            time1 = str(i.whenis)
+            time2 = time.strptime(time1,'%Y-%m-%d %H:%M')
+            time3 = datetime.datetime(*time2[:5])
+            interval = time3 - datetime.datetime.now()
+            if interval.days > 0 or (interval.days==0 and interval.seconds > 0):
+                datasend.append(data)
     #print('datasend',datasend)
     return render_template('showcommontaxi.html', Session = session, data = datasend , select = "1")
 
@@ -473,13 +481,131 @@ def decline():
 def comment(tmpid):
     session['area'] = 3
     findjoin = Join.query.filter_by(followid = tmpid).all()
+    findorder = Order.query.filter_by(id = tmpid).first()
+    Ownuser = User.query.filter_by(openid = findorder.openid).first()
     senddata = []
+    data = {}
+    data['openid'] = findorder.openid
+    data['name'] = Ownuser.name
+    senddata.append(data)
     for i in findjoin:
+        data = {}
         finduser = User.query.filter_by(openid = i.openid).first()
-        senddata.append(finduser.name)
-    return render_template('comment.html', Session = session , data = senddata , ll = len(senddata))
+        data['openid'] = finduser.openid
+        data['name'] = finduser.name
+        senddata.append(data)
+    
+    return render_template('comment.html', Session = session , data = senddata , ll = len(senddata), tmptmpid = tmpid)
 
 
+
+@webapp.route('/commentperson',methods = ['POST'])
+def commentperson():
+    commenttmp = []
+    peoplecount = int(request.form['peoplecount'])
+    commenttmp.append(request.form['comment1'])
+    commenttmp.append(request.form['comment2'])
+    commenttmp.append(request.form['comment3'])
+    commenttmp.append(request.form['comment4'])
+    print(commenttmp)
+    tmpid = request.form['tmpid']
+    findorder = Order.query.filter_by(id = tmpid).first()
+    Ownuser = User.query.filter_by(openid = findorder.openid).first()
+    findjoin = Join.query.filter_by(followid = tmpid).all()
+    if commenttmp[0] == "迟到":
+        Ownuser.credit = Ownuser.credit - 5
+    elif commenttmp[0] == "信息虚假":
+        Ownuser.credit = Ownuser.credit - 10
+    elif commenttmp[0] == "骚扰用户":
+        Ownuser.credit = Ownuser.credit - 30
+    elif commenttmp[0] == "未支付费用":
+        Ownuser.credit = Ownuser.credit - 90
+    
+    db_session.commit()
+
+    senddata = {
+        "touser":Ownuser.openid,
+        "template_id":"VHpOV0yMBM10i9bTGRsJt5yy5a-dhDWHrXatVmkOWRA",
+        "data":{
+            "first": {
+                "value":"同伴评价",
+                "color":"#173177"
+            },
+            "keyword1":{
+                "value":findorder.whenis,
+                "color":"#173177"
+            },
+            "keyword2": {
+                "value":findorder.fromwhere,
+                "color":"#173177"
+            },
+            "keyword3": {
+                "value":findorder.towhere,
+                "color":"#173177"
+            },
+            "keyword4": {
+                "value":commenttmp[0],
+                "color":"#173177"
+            },
+            "remark":{
+                "value":"如有疑议，请联系管理员lk@acm.hitwh.edu.cn",
+                "color":"#173177"
+            }
+        }
+    }
+    requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata))  
+
+
+
+
+    commenttmp.pop(0)
+    peoplecount = peoplecount - 1
+    for i in range(peoplecount):
+        finduser = User.query.filter_by(openid = findjoin[i].openid).first()
+        if commenttmp[i] == "迟到":
+            finduser.credit = finduser.credit - 5
+        elif commenttmp[i] == "信息虚假":
+            finduser.credit = finduser.credit - 10
+        elif commenttmp[i] == "骚扰用户":
+            finduser.credit = finduser.credit - 30
+        elif commenttmp[i] == "未支付费用":
+            finduser.credit = finduser.credit - 90
+        senddata = {
+            "touser":finduser.openid,
+            "template_id":"VHpOV0yMBM10i9bTGRsJt5yy5a-dhDWHrXatVmkOWRA",
+            "data":{
+                "first": {
+                    "value":"同伴评价",
+                    "color":"#173177"
+                },
+                "keyword1":{
+                    "value":findorder.whenis,
+                    "color":"#173177"
+                },
+                "keyword2": {
+                    "value":findorder.fromwhere,
+                    "color":"#173177"
+                },
+                "keyword3": {
+                    "value":findorder.towhere,
+                    "color":"#173177"
+                },
+                "keyword4": {
+                    "value":commenttmp[i],
+                    "color":"#173177"
+                },
+                "remark":{
+                    "value":"如有疑议，请联系管理员lk@acm.hitwh.edu.cn",
+                    "color":"#173177"
+                }
+            }
+        }
+        requests.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+access_token,data = json.dumps(senddata)) 
+
+
+    db_session.commit()
+                
+    return ""
 
 
 
