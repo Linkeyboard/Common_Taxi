@@ -579,9 +579,10 @@ def comment(tmpid):
     for i in findjoin:
         data = {}
         finduser = User.query.filter_by(openid = i.openid).first()
-        data['openid'] = finduser.openid
-        data['name'] = finduser.name
-        senddata.append(data)
+        if finduser.openid != session['openid']:
+            data['openid'] = finduser.openid
+            data['name'] = finduser.name
+            senddata.append(data)
     
     return render_template('comment.html', Session = session , data = senddata , ll = len(senddata), tmptmpid = tmpid, commentis = findorder.commentis)
 
