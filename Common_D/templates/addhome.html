@@ -73,7 +73,7 @@
         console.log($("#start").val());
         console.log($("#end").val());
         console.log($("#time").val());
-        if( !$("#start").val() || !$("#end").val() || !$("#time").val() == null){
+        if( !$("#start").val() || !$("#end").val() || !$("#time").val() ){
             $.toast("请填写所有字段","cancel");
         }else{
           $.post('/lk/inserthome',

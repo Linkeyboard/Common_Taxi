@@ -176,9 +176,8 @@ def inserthome():
     restime = time3.strftime("%Y-%m-%d %H:%M")
     newhome = GOHOME(session['openid'] ,request.form['fromhome'],request.form['tohome'],request.form['typehome'],restime)
     findhome = GOHOME.query.filter_by(tohome = request.form['tohome']).all()
-    towho = User.query.filter_by(openid = session['openid']).first()
     for i in findhome:
-        finduser = User.query.filter_by(openid = i.openid).first()
+        finduser = User.query.filter_by(openid = i.openid).all()
         senddata = {
             "touser":finduser.openid,
             "template_id":"lvRRnjCTdF0I3ztMsTbYBTFcxITUBfesVinks1Bzos0",
@@ -188,23 +187,23 @@ def inserthome():
                     "color":"#173177"
                  },
                 "keyword1":{
-                    "value":towho.name,
+                    "value":finduser.name,
                     "color":"#173177"
                  },
                 "keyword2": {
-                    "value":towho.wechatid,
+                    "value":finduser.wechatid,
                     "color":"#173177"
                    },
                 "keyword3": {
-                    "value":towho.phone,
+                    "value":finduser.phone,
                     "color":"#173177"
                    },
                 "keyword4": {
-                    "value":i.whenhome,
+                    "value":findhome.whenis,
                     "color":"#173177"
                    },
                 "keyword5": {
-                    "value":i.fromhome,
+                    "value":findhome.fromwhere,
                     "color":"#173177"
                    },
                 "remark":{
@@ -776,7 +775,7 @@ def userdetail(tmpid):
     data['whenhome'] = tmphome.whenhome
     data['homeid'] = tmphome.homeid
     data['typehome'] = tmphome.typehome
-    data['openid'] = finduser.openid
+    data['openid'] = session['openid']
     data['credit'] = finduser.credit
     data['name'] = finduser.name
     data['phone'] = finduser.phone
@@ -798,12 +797,21 @@ def userdetail(tmpid):
     return render_template('userdetail.html',Session = session, data = data)
 
 
-@webapp.route('/deletehome',methods = ['POST'])
-def deletehome():
+@webapp.route('/deletehome1',methods = ['POST','GET'])
+def deletehome1():
+    if request.method == 'POST':
+        tmphome = GOHOME.query.filter_by(homeid = request.form['homeid']).first()
+        db_session.delete(home)
+        db_session.commit()
+    return "Hello world"
+
+
+@webapp.route('/test',methods=['POST','GET'])
+def test():
     tmphome = GOHOME.query.filter_by(homeid = request.form['homeid']).first()
-    db_session.delete(tmphome)
+    db_session.delete(home)
     db_session.commit()
-    return ""
+    return "Hello world"
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
