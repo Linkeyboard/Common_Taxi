@@ -176,8 +176,9 @@ def inserthome():
     restime = time3.strftime("%Y-%m-%d %H:%M")
     newhome = GOHOME(session['openid'] ,request.form['fromhome'],request.form['tohome'],request.form['typehome'],restime)
     findhome = GOHOME.query.filter_by(tohome = request.form['tohome']).all()
+    towho = User.query.filter_by(openid = request.form['openid']).first()
     for i in findhome:
-        finduser = User.query.filter_by(openid = i.openid).all()
+        finduser = User.query.filter_by(openid = i.openid).first()
         senddata = {
             "touser":finduser.openid,
             "template_id":"lvRRnjCTdF0I3ztMsTbYBTFcxITUBfesVinks1Bzos0",
@@ -187,23 +188,23 @@ def inserthome():
                     "color":"#173177"
                  },
                 "keyword1":{
-                    "value":finduser.name,
+                    "value":towho.name,
                     "color":"#173177"
                  },
                 "keyword2": {
-                    "value":finduser.wechatid,
+                    "value":towho.wechatid,
                     "color":"#173177"
                    },
                 "keyword3": {
-                    "value":finduser.phone,
+                    "value":towho.phone,
                     "color":"#173177"
                    },
                 "keyword4": {
-                    "value":findhome.whenis,
+                    "value":i.whenhome,
                     "color":"#173177"
                    },
                 "keyword5": {
-                    "value":findhome.fromwhere,
+                    "value":i.fromhome,
                     "color":"#173177"
                    },
                 "remark":{
@@ -797,6 +798,11 @@ def userdetail(tmpid):
     return render_template('userdetail.html',Session = session, data = data)
 
 
+@webapp.route('/lk/deletehome',methods = ['POST'])
+def deletehome():
+    tmphome = GOHOME.query.filter_by(homeid = request.form['homeid']).first()
+    db_session.delete(home)
+    db_session.commit()
 
 
 app.register_blueprint(webapp)

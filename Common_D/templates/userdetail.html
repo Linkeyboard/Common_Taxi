@@ -47,8 +47,21 @@
     </div>
   </div>
   <div class="weui-form-preview__ft">
-    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="">加入</a>
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="change()">删除</a>
     <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/samecity">返回</a>
   </div>
 </div>
+<script>
+    function change(){
+        $.post('/lk/deletehome',
+        {
+            homeid:{{ data['homeid'] }}
+        },
+        function(data,status){
+                                    
+        });
+
+    }
+</script>
+<br><br><br><br>
 {% endblock %}
