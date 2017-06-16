@@ -444,6 +444,19 @@ def myjoin():
                 data['headimgurl'] = tmpstu.headimgurl
                 data['nickname'] = tmpstu.nickname
             datasend.append(data)
+    findorder = Order.query.filter_by(openid = session['openid']).all()
+    for i in findorder:
+        data = {}
+        data['towhere'] = i.towhere
+        data['fromwhere'] = i.fromwhere
+        data['countis'] = i.countis
+        data['whenis'] = i.whenis
+        data['id'] = i.id
+        data['selector'] = "2"
+        findstu = Stu.query.filter_by(openid = session['openid']).first()
+        data['nickname'] = findstu.nickname
+        data['headimgurl'] = findstu.headimgurl
+        datasend.append(data)
     return render_template('showcommontaxi.html', Session = session, data = datasend, select = "2")
 
 
@@ -579,10 +592,9 @@ def comment(tmpid):
     for i in findjoin:
         data = {}
         finduser = User.query.filter_by(openid = i.openid).first()
-        if finduser.openid != session['openid']:
-            data['openid'] = finduser.openid
-            data['name'] = finduser.name
-            senddata.append(data)
+        data['openid'] = finduser.openid
+        data['name'] = finduser.name
+        senddata.append(data)
     
     return render_template('comment.html', Session = session , data = senddata , ll = len(senddata), tmptmpid = tmpid, commentis = findorder.commentis)
 
