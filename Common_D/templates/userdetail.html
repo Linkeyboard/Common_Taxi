@@ -47,7 +47,9 @@
     </div>
   </div>
   <div class="weui-form-preview__ft">
+    {% if Session['openid'] == data['openid'] %}
     <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="change()">删除</a>
+    {% endif %}
     <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/lk/samecity">返回</a>
   </div>
 </div>
@@ -58,7 +60,7 @@
             homeid:{{ data['homeid'] }}
         },
         function(data,status){
-                                    
+          $.toast("操作成功");                          
         });
 
     }

@@ -776,7 +776,7 @@ def userdetail(tmpid):
     data['whenhome'] = tmphome.whenhome
     data['homeid'] = tmphome.homeid
     data['typehome'] = tmphome.typehome
-    data['openid'] = session['openid']
+    data['openid'] = finduser.openid
     data['credit'] = finduser.credit
     data['name'] = finduser.name
     data['phone'] = finduser.phone
@@ -798,12 +798,12 @@ def userdetail(tmpid):
     return render_template('userdetail.html',Session = session, data = data)
 
 
-@webapp.route('/lk/deletehome',methods = ['POST'])
+@webapp.route('/deletehome',methods = ['POST'])
 def deletehome():
     tmphome = GOHOME.query.filter_by(homeid = request.form['homeid']).first()
-    db_session.delete(home)
+    db_session.delete(tmphome)
     db_session.commit()
-
+    return ""
 
 app.register_blueprint(webapp)
 app.run(debug = True, host ='0.0.0.0', port=8008) 
