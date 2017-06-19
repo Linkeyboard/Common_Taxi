@@ -139,6 +139,7 @@ def changeinformation():
     user = User(session['openid'], request.form['stuname'],request.form['phone'],session['stuid'],request.form['wechatid'],int(request.form['sex']))
     olduser = User.query.filter_by(openid=session['openid']).first()
     if olduser:
+        user.credit = olduser.credit
         db_session.delete(olduser)
     db_session.add(user)
     db_session.commit()
@@ -616,9 +617,9 @@ def commentperson():
     if commenttmp[0] == "迟到":
         Ownuser.credit = Ownuser.credit - 5
     elif commenttmp[0] == "信息虚假":
-        Ownuser.credit = Ownuser.credit - 10
+        Ownuser.credit = Ownuser.credit - 20
     elif commenttmp[0] == "骚扰用户":
-        Ownuser.credit = Ownuser.credit - 30
+        Ownuser.credit = Ownuser.credit - 40
     elif commenttmp[0] == "未支付费用":
         Ownuser.credit = Ownuser.credit - 90
     findorder.commentis = 1
